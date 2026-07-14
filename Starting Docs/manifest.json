@@ -1,0 +1,41 @@
+{
+  "packet": "Pigeon Empire Chucky Bootstrap",
+  "created": "2026-07-14",
+  "repo": "/home/ubuntu/pigeon-empire",
+  "remote": "git@github.com:Ferro-ai26/pigeon-empire.git",
+  "jobs": [
+    {
+      "name": "pigeon-empire-director-weekdays",
+      "schedule": "0 8 * * 1-5",
+      "model": "gpt-5.6-sol",
+      "provider": "openai-codex",
+      "reasoning_effort": "low",
+      "max_iterations": 20
+    },
+    {
+      "name": "pigeon-empire-builder-weekdays",
+      "schedule": "0 13 * * 1-5",
+      "model": "gpt-5.6-sol",
+      "provider": "openai-codex",
+      "reasoning_effort": "low",
+      "max_iterations": 40
+    },
+    {
+      "name": "pigeon-empire-qa-weekdays",
+      "schedule": "0 19 * * 1-5",
+      "model": "gpt-5.6-sol",
+      "provider": "openai-codex",
+      "reasoning_effort": "low",
+      "max_iterations": 30
+    }
+  ],
+  "files": [
+    "00_README_FIRST.md",
+    "01_FINAL_MASTER_PLAN.md",
+    "02_PASTE_TO_CODEX_BOOTSTRAP.md",
+    "03_CRON_DIRECTOR_PROMPT.md",
+    "04_CRON_BUILDER_PROMPT.md",
+    "05_CRON_QA_PROMPT.md",
+    "06_POST_BOOTSTRAP_VERIFY.md"
+  ]
+}

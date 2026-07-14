@@ -1,0 +1,9 @@
+.godot/
+.import/
+export/
+builds/
+*.tmp
+*.log
+__pycache__/
+*.pyc
+.chucky/active-run.lock
