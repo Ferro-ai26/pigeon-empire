@@ -5,65 +5,76 @@ Status: Approved slice — ready for build
 
 ## Objective
 
-Implement a deterministic isometric coordinate utility and a minimal editor-visible rooftop grid that proves tiles can be projected, displayed, and selected consistently.
+Add a bounded, deterministic rooftop camera controller that supports pointer-drag panning and stepped zoom without changing grid coordinates or cell selection semantics.
 
 ## Gameplay purpose
 
-Establish the spatial foundation for the rooftop empire so later buildings, pigeons, and gathering targets can share one reliable tile-coordinate contract.
+Let the player inspect the rooftop comfortably while preserving the reliable tile-selection foundation needed by later world objects and buildings.
 
 ## Exact scope
 
-- Add a typed, stateless grid utility for integer tile-to-world projection and world-to-tile conversion using one documented tile size.
-- Add a small fixed rooftop grid to the main scene using project-owned placeholder visuals.
-- Add pointer selection for valid cells and one clearly visible selected-cell state.
-- Keep grid dimensions and projection constants centralized rather than scattered through UI or scene scripts.
-- Add a focused headless smoke test covering projection round trips, grid bounds, required scene nodes, and selection-state changes through a callable API.
+- Add one `Camera2D` child to the editor-visible main scene, owned by a small typed world-camera controller.
+- Support primary-pointer drag panning through a callable controller API used by input handling; mouse drag is the required desktop/browser mapping and the API must remain suitable for later touch wiring.
+- Support mouse-wheel stepped zoom through the same controller, clamped to centralized minimum and maximum zoom values.
+- Clamp the camera's target position to centralized rectangular world-space bounds sized for this fixed rooftop slice.
+- Keep camera state independent from `IsometricGrid`, `RooftopGrid.selected_cell`, and all placeholder draw/style properties.
+- Add a focused headless smoke test that exercises the callable pan/zoom API, clamp edges, required scene nodes, and preservation of grid projection and selection state.
 
 ## Non-goals
 
-- Camera pan/zoom.
-- Resource gathering, buildings, placement previews, pigeons, jobs, production, progression, or persistence.
-- Procedural maps, combat, multiplayer, monetization, Android work, final art, or final audio.
-- More than one rooftop or any off-grid movement.
+- Touch gestures, pinch zoom, inertia, smoothing, edge scrolling, camera shake, minimaps, or saved camera state.
+- Enlarging or procedurally generating the rooftop.
+- Resource gathering, buildings, placement previews, pigeons, production, progression, or persistence.
+- New image assets, final art, final typography, final animation, final audio, Android work, combat, multiplayer, or monetization.
+- Refactoring the existing projection or rooftop drawing implementation beyond compatibility fixes strictly required by camera input coordinates.
 
 ## Likely affected systems/files
 
 - `scenes/main.tscn`
-- `scripts/main.gd`
-- `scripts/world/isometric_grid.gd` (new)
-- `scenes/world/rooftop_grid.tscn` (new)
-- `scripts/world/rooftop_grid.gd` (new)
-- `tests/phase01_isometric_grid_smoke.gd` (new)
+- `project.godot` only if named input actions are required
+- `scripts/world/rooftop_camera.gd` (new)
+- `tests/phase01_camera_controls_smoke.gd` (new)
+- `scripts/world/rooftop_grid.gd` only if a minimal viewport-to-world pointer conversion fix is proven necessary
 
-The Builder may adjust exact new paths within the same `world` boundary if required by Godot resource loading, but must not broaden scope.
+The Builder may adjust the new camera script path within the existing `world` boundary if Godot resource loading requires it, but must not broaden scope.
 
 ## Acceptance criteria
 
 1. Headless startup exits successfully and prints `PIGEON_EMPIRE_STARTUP_OK`.
-2. The main scene contains one fixed rooftop grid with at least 4 × 4 valid cells rendered in an isometric diamond layout.
-3. Every valid integer cell round-trips through tile-to-world and world-to-tile conversion at its cell center.
-4. Out-of-bounds coordinates are rejected by a single grid-bounds API.
-5. Selecting a valid cell updates a queryable selected-cell value and a visible highlight; invalid coordinates do not change the current selection.
-6. The focused smoke prints exactly one `PHASE01_ISOMETRIC_GRID_SMOKE PASS` success line and exits 0.
-7. Existing bootstrap smoke remains green and `git diff --check` reports no whitespace errors.
+2. `scenes/main.tscn` contains exactly one enabled `Camera2D` with a dedicated typed controller script.
+3. A non-zero pan request through the callable API changes camera target position in the expected direction, and requests beyond every configured edge clamp to the centralized camera bounds.
+4. Zoom-in and zoom-out requests change both camera axes uniformly in deterministic steps and clamp at centralized minimum and maximum values.
+5. Camera movement and zoom do not change `IsometricGrid` projection results, rooftop bounds, or the currently selected valid cell.
+6. Existing valid-cell selection remains callable after camera movement; invalid coordinates still leave selection unchanged.
+7. Camera behavior contains no dependency on textures, icons, fonts, colors, copy, placeholder image dimensions, or final visual theme values.
+8. The focused smoke prints exactly one `PHASE01_CAMERA_CONTROLS_SMOKE PASS` success line and exits 0.
+9. Existing bootstrap and Phase 1 grid smokes remain green, and `git diff --check` reports no whitespace errors.
 
 ## Focused validation commands
 
 ```bash
-godot --headless --path . --quit
-godot --headless --path . -s res://tests/smoke_test.gd
-godot --headless --path . -s res://tests/phase01_isometric_grid_smoke.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . --import
+/home/ubuntu/.local/bin/godot4 --headless --path . --quit
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/smoke_test.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_isometric_grid_smoke.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_camera_controls_smoke.gd
 git diff --check
 ```
 
-Use the actual installed Godot 4 binary if `godot` is not the executable name.
-
 ## Save/schema impact
 
-None. Selection and grid state are runtime-only; no save file or schema may be introduced in this slice.
+None. Camera position, drag state, and zoom are runtime-only. No save file, migration, or schema change is permitted.
 
 ## Risks and rollback boundary
 
-- Inverse projection can select adjacent cells near diamond edges; smoke only guarantees exact cell-center round trips, while pointer behavior must clamp through the same bounds API.
-- Placeholder drawing can become coupled to grid math; keep projection logic stateless and independent from rendering.
-- Rollback boundary: all changes are confined to the listed Phase 1 world/grid files, main-scene wiring, and focused smoke. Reverting this slice must restore the Phase 0 boot scene without data migration.
+- `Camera2D` transforms can expose incorrect pointer-coordinate conversion in rooftop selection. Any fix must convert viewport input to world/local coordinates through Godot transforms without changing projection math.
+- Drag input can conflict with click selection. A drag must not be interpreted as a different cell-selection mechanic; keep camera gesture state isolated and retain the existing callable selection contract.
+- Broad bounds or excessive zoom can reveal empty world space. Use conservative centralized constants for this fixed 5 × 5 rooftop rather than deriving mechanics from viewport art.
+- Rollback boundary: the camera node/script, optional named input actions, focused smoke, and any narrowly proven pointer-coordinate compatibility fix. Reverting the slice must restore the verified grid with no data migration.
+
+## Reskin boundary and placeholder-asset impact
+
+- No image files are added or modified; all current images and drawn grid styling remain temporary placeholders.
+- Camera mechanics operate only on world-space position, zoom, viewport input, and semantic bounds. They must not inspect sprite sizes, texture dimensions, colors, fonts, copy, layout styling, animation styling, or audio.
+- Camera limits and zoom constants belong in the controller as gameplay/navigation configuration, not in placeholder assets or theme tokens.
+- The focused smoke must temporarily alter at least one existing rooftop style token while the camera is displaced, then prove camera bounds/zoom and grid selection state are unchanged before restoring the token. This verifies substitution safety, not subjective visual quality.
