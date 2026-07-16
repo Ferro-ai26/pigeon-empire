@@ -44,6 +44,18 @@ func _initialize() -> void:
 		grid.free()
 		_fail("Invalid selection changed state")
 		return
+	# Reskin smoke: redirect a semantic style token and prove mechanics remain unchanged.
+	var original_fill: Color = grid.tile_fill_color
+	grid.tile_fill_color = Color.MAGENTA
+	if grid.tile_fill_color == original_fill:
+		grid.free()
+		_fail("Placeholder style token could not be redirected")
+		return
+	if grid.get_selected_cell() != Vector2i(2, 3) or not grid.is_cell_valid(Vector2i(4, 4)):
+		grid.free()
+		_fail("Style token substitution changed grid mechanics")
+		return
+	grid.tile_fill_color = original_fill
 	grid.free()
 	print("PHASE01_ISOMETRIC_GRID_SMOKE PASS")
 	quit(0)

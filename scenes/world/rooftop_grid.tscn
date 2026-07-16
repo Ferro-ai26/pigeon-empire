@@ -4,3 +4,7 @@
 
 [node name="RooftopGrid" type="Node2D"]
 script = ExtResource("1_grid")
+tile_fill_color = Color(0.435294, 0.513726, 0.568627, 1)
+tile_edge_color = Color(0.717647, 0.780392, 0.811765, 1)
+selected_fill_color = Color(0.94902, 0.756863, 0.305882, 1)
+selected_marker_color = Color(0.14902, 0.117647, 0.047059, 1)
