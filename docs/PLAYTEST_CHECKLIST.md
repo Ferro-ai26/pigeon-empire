@@ -12,4 +12,8 @@
 - [ ] Grid cells form a readable diamond layout with no missing cells.
 - [ ] Clicking a valid diamond moves the gold selected-cell highlight to that cell.
 - [ ] Clicking outside the rooftop does not move or clear the current selection.
-- [x] Focused Phase 1 smoke passes projection round trips, bounds, scene-node, selection-state, and style-token substitution checks.
+- [x] Focused Phase 1 grid smoke passes projection round trips, bounds, scene-node, selection-state, and style-token substitution checks.
+- [ ] Dragging with the primary mouse button pans the rooftop in the expected direction and stops at each world bound.
+- [ ] Mouse-wheel steps zoom uniformly in and out, remain within the configured limits, and keep the rooftop comfortably framed.
+- [ ] Clicking valid and invalid cells after panning and zooming preserves the documented selection behavior.
+- [x] Focused camera smoke passes scene-node, callable pan, bounds, stepped zoom, selection-preservation, and style-token substitution checks.
