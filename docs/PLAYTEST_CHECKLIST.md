@@ -17,5 +17,8 @@
 - [ ] Mouse-wheel steps zoom uniformly in and out, remain within the configured limits, and keep the rooftop comfortably framed.
 - [ ] Clicking valid and invalid cells after panning and zooming preserves the documented selection behavior.
 - [x] Focused camera smoke passes scene-node, callable pan, bounds, stepped zoom, selection-preservation, and style-token substitution checks.
+- [ ] The two temporary rooftop objects overlap in the expected near-row-in-front order and remain readable at supported zoom levels.
+- [ ] Equal-depth rooftop objects follow scene sibling order consistently when inspected in the GUI.
+- [x] Focused visual-layering smoke passes scene ownership, depth ordering, equal-depth determinism, invalid-cell rejection, adjacent-state isolation, and presentation-token substitution checks.
 
-Automated camera acceptance is verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
+Automated grid, camera, and visual-layering acceptance is verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
