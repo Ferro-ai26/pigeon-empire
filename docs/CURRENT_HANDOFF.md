@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Implementation base commit: `0ea6598`
@@ -21,4 +21,6 @@ Validation completed under Godot 4.6.2:
 
 Known blocker status: None. Manual GUI verification of pointer drag, wheel feel, click selection under an active camera, and subjective framing remains a QA task; no GUI or browser/export success is claimed.
 
-QA boundary: validate only this camera-control slice. Do not begin the next roadmap item until the Director approves it.
+QA result: Builder commit `974a73c` passed headless import/startup, bootstrap, grid, focused camera, reskin-substitution, and whitespace validation under Godot 4.6.2. No integration fix was required. Exact promoted `main` commit is recorded in this file by the QA promotion commit.
+
+Boundary: the approved camera-control slice is verified. Do not begin the next roadmap item until the Director approves it.

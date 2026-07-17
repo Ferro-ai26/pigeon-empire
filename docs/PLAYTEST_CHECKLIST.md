@@ -17,3 +17,5 @@
 - [ ] Mouse-wheel steps zoom uniformly in and out, remain within the configured limits, and keep the rooftop comfortably framed.
 - [ ] Clicking valid and invalid cells after panning and zooming preserves the documented selection behavior.
 - [x] Focused camera smoke passes scene-node, callable pan, bounds, stepped zoom, selection-preservation, and style-token substitution checks.
+
+Automated camera acceptance is verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
