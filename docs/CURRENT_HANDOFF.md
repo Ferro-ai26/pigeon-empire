@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Build base commit: `04e50b8`
@@ -23,6 +23,8 @@ Validated under Godot 4.6.2:
 - Phase 1 visual-layering smoke: PASS; exactly one `PHASE01_VISUAL_LAYERING_SMOKE PASS`
 - `git diff --check`: PASS
 
-Known blocker status: None. Manual GUI overlap/readability remains unverified and is explicitly a QA item.
+QA result: VERIFIED at builder commit `85f1d9f`; no integration fix was required. Headless import/startup, baseline, grid, camera, visual-layering, reskin substitution, exact marker-count, and diff checks passed under Godot 4.6.2.
+
+Known blocker status: None. Manual GUI overlap/readability remains unverified and is explicitly a non-claimed QA item.
 
 Boundary: QA this visual-layering slice only. Do not add selection or begin Phase 2.

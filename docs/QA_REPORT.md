@@ -21,3 +21,14 @@
 - Reskin check passed: the camera smoke temporarily redirects the semantic `tile_fill_color` style token while the camera is displaced, proves camera/grid mechanics and selection remain unchanged, and restores the token. Camera code has no presentation-resource dependency.
 - Persistence/save tests: not applicable; camera state is runtime-only and the builder diff contains no save or schema changes.
 - Manual GUI status: not tested in this headless QA run. Pointer-drag and wheel feel, click selection under the active camera, framing, and subjective visual layout remain unchecked; no GUI or browser/export success is claimed.
+
+## Phase 1 — Rooftop Visual Layering
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `85f1d9f`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), bootstrap smoke, grid smoke, camera smoke, visual-layering smoke (exactly one `PHASE01_VISUAL_LAYERING_SMOKE PASS`), and `git diff --check`.
+- Reskin check passed: the visual-layering smoke temporarily redirects the replaceable placeholder color, proves semantic cells and layers remain unchanged, and restores it. Layering logic has no texture, color, copy, dimensions, animation, audio, or final-theme dependency.
+- Persistence/save tests: not applicable; the slice changes runtime scene state only and contains no save or schema changes.
+- Manual GUI status: not tested. Placeholder overlap/readability and equal-depth sibling-order appearance remain unchecked; no GUI or browser/export success is claimed.

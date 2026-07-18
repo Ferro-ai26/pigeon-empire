@@ -20,5 +20,6 @@
 - [ ] The two temporary rooftop objects overlap in the expected near-row-in-front order and remain readable at supported zoom levels.
 - [ ] Equal-depth rooftop objects follow scene sibling order consistently when inspected in the GUI.
 - [x] Focused visual-layering smoke passes scene ownership, depth ordering, equal-depth determinism, invalid-cell rejection, adjacent-state isolation, and presentation-token substitution checks.
+- [x] QA reran headless import/startup, baseline, grid, camera, visual-layering, reskin substitution, exact marker-count, and diff checks for the visual-layering slice.
 
 Automated grid, camera, and visual-layering acceptance is verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
