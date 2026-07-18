@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id="1"]
 [ext_resource path="res://scenes/world/rooftop_grid.tscn" type="PackedScene" id="2_grid"]
 [ext_resource path="res://scripts/world/rooftop_camera.gd" type="Script" id="3_camera"]
 [ext_resource path="res://scenes/world/rooftop_world_object.tscn" type="PackedScene" id="4_object"]
+[ext_resource path="res://scripts/world/rooftop_world_selection.gd" type="Script" id="5_selection"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1")
@@ -20,6 +21,7 @@ position = Vector2(576, 220)
 
 [node name="WorldObjects" type="Node2D" parent="."]
 position = Vector2(576, 220)
+script = ExtResource("5_selection")
 
 [node name="HigherRowPlaceholder" parent="WorldObjects" instance=ExtResource("4_object")]
 grid_cell = Vector2i(1, 1)

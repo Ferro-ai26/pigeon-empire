@@ -21,5 +21,9 @@
 - [ ] Equal-depth rooftop objects follow scene sibling order consistently when inspected in the GUI.
 - [x] Focused visual-layering smoke passes scene ownership, depth ordering, equal-depth determinism, invalid-cell rejection, adjacent-state isolation, and presentation-token substitution checks.
 - [x] QA reran headless import/startup, baseline, grid, camera, visual-layering, reskin substitution, exact marker-count, and diff checks for the visual-layering slice.
+- [ ] Clicking either occupied rooftop cell selects its topmost world object and shows the geometric selection marker.
+- [ ] Clicking a valid empty cell clears world-object selection while the rooftop grid keeps its own selected-cell behavior.
+- [ ] Selection targeting and marker readability remain usable after camera pan/zoom; placeholder replacement does not change targeting.
+- [x] Builder focused selection smoke passes occupied/empty/invalid selection, deterministic sibling tie-breaking, callable projection, adjacent-state isolation, and restored presentation-token substitution checks.
 
-Automated grid, camera, and visual-layering acceptance is verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
+Automated grid, camera, visual-layering, and world-object-selection acceptance is verified at Builder level. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
