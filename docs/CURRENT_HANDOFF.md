@@ -1,30 +1,21 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Build base commit: `04e50b8`
-Objective completed: Added deterministic semantic-cell visual layering for rooftop world objects.
+Planning base commit: `80a15a6`
+Objective: Add runtime-only rooftop world-object selection through semantic grid cells, with deterministic sibling-order tie-breaking and replaceable non-color-only selection feedback.
 
-Implementation facts:
-- `scripts/world/world_layering.gd` owns the 5 × 5 bounds check and deterministic `BASE_LAYER + x + y` contract.
-- `scripts/world/rooftop_world_object.gd` exposes typed `apply_grid_cell()`, preserving cell, position, and layer when a cell is invalid.
-- `scenes/world/rooftop_world_object.tscn` separates its semantic root from the replaceable `PlaceholderVisual` subtree.
-- `scenes/main.tscn` contains one `WorldObjects` container and two non-interactive instances at cells `(1, 1)` and `(3, 2)`.
-- Equal-depth cells intentionally share a base layer; scene sibling order is the explicit tie-break.
-- `tests/phase01_visual_layering_smoke.gd` covers ordering, equal depth, invalid rejection, scene ownership, adjacent-state isolation, and presentation-token substitution.
+Required validations:
+- `/home/ubuntu/.local/bin/godot4 --headless --path . --import`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . --quit` with exactly one `PIGEON_EMPIRE_STARTUP_OK`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/smoke_test.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_isometric_grid_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_camera_controls_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_visual_layering_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_world_object_selection_smoke.gd` with exactly one `PHASE01_WORLD_OBJECT_SELECTION_SMOKE PASS`
+- `git diff --check`
 
-Validated under Godot 4.6.2:
-- headless import: PASS
-- headless startup: PASS; exactly one `PIGEON_EMPIRE_STARTUP_OK`
-- baseline smoke: PASS
-- Phase 1 grid smoke: PASS
-- Phase 1 camera smoke: PASS
-- Phase 1 visual-layering smoke: PASS; exactly one `PHASE01_VISUAL_LAYERING_SMOKE PASS`
-- `git diff --check`: PASS
+Known blocker status: None. Manual GUI pointer feel and selection-marker readability remain unverified and must not be claimed by headless QA.
 
-QA result: VERIFIED at builder commit `85f1d9f`; no integration fix was required. Headless import/startup, baseline, grid, camera, visual-layering, reskin substitution, exact marker-count, and diff checks passed under Godot 4.6.2.
-
-Known blocker status: None. Manual GUI overlap/readability remains unverified and is explicitly a non-claimed QA item.
-
-Boundary: QA this visual-layering slice only. Do not add selection or begin Phase 2.
+Builder boundary: Implement only the approved world-object-selection slice in `docs/ACTIVE_PHASE.md`. Do not add details UI, placement, buildings, resources, pigeons, persistence, or begin Phase 2. Preserve semantic-cell targeting and the reskin boundary; placeholder art dimensions must never define interaction.
