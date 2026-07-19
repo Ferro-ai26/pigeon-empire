@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `80a15a6`
@@ -20,5 +20,7 @@ Required validations:
 Known blocker status: None. Manual GUI pointer feel and selection-marker readability remain unverified and must not be claimed by headless QA.
 
 Builder implementation: `WorldObjects` now uses `RooftopWorldSelection` for semantic-cell resolution, reverse-sibling tie-breaking, pointer projection delegation, empty-cell clearing, and invalid-cell rejection. `RooftopWorldObject` owns runtime selected state and drives the editor-visible `SelectionFeedback` geometry through replaceable style tokens. The focused smoke covers both occupied placeholders, empty/invalid behavior, tie-breaking, callable projection, adjacent-state isolation, and restored presentation-token substitution.
+
+QA verification: Builder commit `4f2fd6d` passed headless import/startup, baseline, all prior Phase 1 smokes, the focused world-object-selection smoke, exact marker-count checks, reskin token substitution, and `git diff --check`. No integration fix was required. Manual GUI pointer feel and marker readability remain unverified.
 
 Builder boundary: Implement only the approved world-object-selection slice in `docs/ACTIVE_PHASE.md`. Do not add details UI, placement, buildings, resources, pigeons, persistence, or begin Phase 2. Preserve semantic-cell targeting and the reskin boundary; placeholder art dimensions must never define interaction.

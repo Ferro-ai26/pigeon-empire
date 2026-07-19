@@ -25,5 +25,6 @@
 - [ ] Clicking a valid empty cell clears world-object selection while the rooftop grid keeps its own selected-cell behavior.
 - [ ] Selection targeting and marker readability remain usable after camera pan/zoom; placeholder replacement does not change targeting.
 - [x] Builder focused selection smoke passes occupied/empty/invalid selection, deterministic sibling tie-breaking, callable projection, adjacent-state isolation, and restored presentation-token substitution checks.
+- [x] QA reran headless import/startup, baseline, all prior Phase 1 smokes, focused world-object selection, exact marker-count, reskin substitution, and diff checks for the selection slice.
 
-Automated grid, camera, visual-layering, and world-object-selection acceptance is verified at Builder level. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
+Automated grid, camera, visual-layering, and world-object-selection acceptance is QA-verified. The unchecked items above require an actual GUI playtest and are not claimed by headless QA.
