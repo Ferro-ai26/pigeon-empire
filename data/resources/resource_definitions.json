@@ -1,0 +1,23 @@
+[
+  {
+    "id": "crumbs",
+    "display_name": "Crumbs",
+    "short_description": "Food scraps gathered for the rooftop colony.",
+    "icon_slot": "resource.crumbs.icon",
+    "style_slot": "resource.crumbs.style"
+  },
+  {
+    "id": "twigs",
+    "display_name": "Twigs",
+    "short_description": "Small building material gathered around the rooftop.",
+    "icon_slot": "resource.twigs.icon",
+    "style_slot": "resource.twigs.style"
+  },
+  {
+    "id": "shinies",
+    "display_name": "Shinies",
+    "short_description": "Interesting found objects valued by the colony.",
+    "icon_slot": "resource.shinies.icon",
+    "style_slot": "resource.shinies.style"
+  }
+]
