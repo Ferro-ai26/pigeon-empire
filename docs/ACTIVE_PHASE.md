@@ -1,55 +1,53 @@
 # Active Phase
 
-Phase: Phase 1 — Isometric World
+Phase: Phase 2 — Resource Foundation
 Status: Approved slice — ready for build
 
 ## Objective
 
-Add runtime-only selection for rooftop world objects through semantic grid cells, with replaceable selection feedback that does not make placeholder artwork part of the interaction contract.
+Add a typed, data-driven resource-definition catalog that validates stable semantic resource IDs and exposes presentation metadata without introducing inventory, gathering, or UI behavior.
 
 ## Gameplay purpose
 
-Let the player identify and select an occupied rooftop cell so later building and pigeon interactions can target a world object through a narrow, deterministic API.
+Establish one authoritative resource vocabulary for later counters, gathering actions, costs, and UI so those systems can refer to stable IDs instead of duplicating balance or display data.
 
 ## Exact scope
 
-- Add a small typed selection controller to the existing `WorldObjects` container.
-- Resolve a rooftop cell to an existing `RooftopWorldObject` by its semantic `grid_cell`; when multiple objects share a cell, reverse sibling order is the deterministic topmost tie-break.
-- Expose callable selection APIs for selecting by valid rooftop cell, clearing selection, and reading the selected object/cell.
-- Wire primary pointer presses to the existing isometric projection so an occupied cell selects its object and a valid empty cell clears object selection.
-- Add a typed selected-state API to `RooftopWorldObject` and an editor-visible, non-color-only placeholder marker beneath its replaceable visual subtree.
-- Add a focused headless smoke covering occupied selection, empty-cell clearing, invalid-cell rejection, deterministic tie-breaking, pointer-independent callable behavior, adjacent-state isolation, and presentation-token substitution.
+- Add a small typed resource-definition model with a stable semantic ID and replaceable display metadata.
+- Add one project-owned data file containing the Phase 2 starter resource definitions required by the current game mandate; the Builder must use only resource names already established by repository authority and must not invent a new resource or currency.
+- Add a typed catalog/loader that loads the definitions deterministically, rejects malformed entries and duplicate IDs, and provides read-only lookup plus ordered enumeration APIs.
+- Keep display name, short description, semantic icon slot, and semantic style slot as presentation metadata; no gameplay logic may branch on those fields.
+- Add a focused headless smoke covering successful load, deterministic order, known/unknown lookup, duplicate-ID rejection, malformed-entry rejection, and presentation-metadata substitution.
 
 ## Non-goals
 
-- Buildings, placement, resources, pigeons, movement, collision/physics hitboxes, navigation, production, progression, persistence, object details panels, hover states, drag selection, multi-select, or commands.
-- Changes to grid selection semantics, camera behavior, coordinate projection, visual-layer math, rooftop dimensions, or scene startup policy.
-- Texture-alpha or pixel-perfect hit testing, deriving interaction bounds from placeholder dimensions, or attaching gameplay meaning to a color/image.
-- New image files, final art, final typography, animation, audio, browser/export work, Android work, combat, multiplayer, monetization, or unrelated refactors.
+- Resource balances, mutable counters, inventory, capacity, gathering actions, rewards, spending, costs, production, buildings, pigeons, jobs, progression, persistence, offline gains, or UI.
+- Adding or renaming the mandated resource set, adding currencies, or defining economy balance beyond the resource-definition contract.
+- World-object behavior, selection changes, camera/grid changes, scene startup changes, Android/browser/export work, monetization, combat, multiplayer, or unrelated refactors.
+- New image, font, or audio files; final art, final copy, animation, or layout styling.
 
 ## Likely affected systems/files
 
-- `scenes/main.tscn`
-- `scenes/world/rooftop_world_object.tscn`
-- `scripts/world/rooftop_world_object.gd`
-- `scripts/world/rooftop_world_selection.gd` (new controller)
-- `tests/phase01_world_object_selection_smoke.gd` (new)
+- `scripts/resources/resource_definition.gd` (new typed definition)
+- `scripts/resources/resource_catalog.gd` (new loader/catalog)
+- `data/resources/resource_definitions.json` (new project-owned definitions)
+- `tests/phase02_resource_catalog_smoke.gd` (new focused smoke)
 
-The Builder may adjust the new controller/test filenames within the existing `world` and `tests` boundaries if Godot resource loading requires it, but must not broaden scope.
+The Builder may adjust filenames within the existing `scripts`, `data`, and `tests` boundaries if Godot resource loading requires it, but must not attach this catalog to gameplay or broaden scope.
 
 ## Acceptance criteria
 
-1. Headless startup exits successfully and prints exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-2. `scenes/main.tscn` keeps exactly one editor-visible `WorldObjects` container, now owning one typed selection controller and the two verified placeholder object instances.
-3. Selecting either occupied semantic cell returns success, exposes that exact `RooftopWorldObject` and cell through typed read APIs, and marks exactly that object selected.
-4. Selecting a valid empty rooftop cell returns no object, clears the prior object selection, and does not change the rooftop grid's selected-cell state.
-5. Requesting a cell outside the existing 5 × 5 rooftop returns failure/rejection without changing the last selected world object or its selected marker state.
-6. If two test objects share a cell, reverse scene sibling order deterministically selects the topmost candidate; textures, polygon bounds, colors, and node names do not affect the result.
-7. Primary-pointer handling converts the pointer through the existing `WorldObjects` local transform and `IsometricGrid.world_to_tile()` contract, then delegates to the same callable selection API used by tests. No physics or texture hitbox is introduced.
-8. Object selection and clearing do not change object `grid_cell`, position, `z_index`, grid projection/bounds, camera position/zoom, or the rooftop grid's own selected-cell state.
-9. Selection feedback includes an editor-visible shape/geometry cue and is not communicated solely by color. Its colors, dimensions, visibility styling, and future image/icon replacement remain presentation properties outside selection logic.
-10. The focused smoke temporarily changes or replaces a selection-feedback presentation property, proves selection identity and behavior are unchanged, restores it, prints exactly one `PHASE01_WORLD_OBJECT_SELECTION_SMOKE PASS`, and exits 0.
-11. Headless import/startup, baseline smoke, all prior Phase 1 smokes, the new focused smoke, and `git diff --check` pass.
+1. Headless import and startup succeed, with startup printing exactly one `PIGEON_EMPIRE_STARTUP_OK`.
+2. A project-owned data file defines each Phase 2 starter resource from the authoritative game mandate exactly once under a stable lowercase semantic ID; no new resource or currency is invented.
+3. Every valid entry exposes typed semantic ID, display name, short description, semantic icon slot, and semantic style slot fields.
+4. The catalog loads valid definitions successfully and exposes deterministic source order through typed ordered enumeration.
+5. Lookup by a known semantic ID returns the exact definition; lookup by an unknown ID returns a documented safe result without mutating catalog state.
+6. Duplicate IDs, missing required fields, empty IDs, and invalid field types fail through a deterministic validation result without partially publishing a catalog.
+7. Resource identity, validation, lookup, and ordering do not depend on display strings, icon paths, colors, fonts, textures, copy, dimensions, animation, audio, or node names.
+8. The focused smoke temporarily substitutes display metadata for one definition, proves semantic identity, lookup, validation, and order are unchanged, and restores the original value.
+9. No mutable balance, save file, schema version, autoload, UI scene, world scene, or gameplay state is introduced.
+10. The focused smoke prints exactly one `PHASE02_RESOURCE_CATALOG_SMOKE PASS` and exits 0.
+11. Headless import/startup, all existing Phase 1 and baseline smokes, the new focused smoke, and `git diff --check` pass.
 
 ## Focused validation commands
 
@@ -61,25 +59,26 @@ The Builder may adjust the new controller/test filenames within the existing `wo
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_camera_controls_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_visual_layering_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_world_object_selection_smoke.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_catalog_smoke.gd
 git diff --check
 ```
 
 ## Save/schema impact
 
-None. Selection is runtime-only and stores object references/cells only for the current scene. No save file, persistent identifier, migration, or schema change is permitted.
+None. This slice defines immutable runtime catalog data only. It must not create save files, mutable balances, schema versions, migrations, autoload state, or persistent identifiers beyond the stable definition IDs reserved for future systems.
 
 ## Risks and rollback boundary
 
-- Both `RooftopGrid` and world-object selection can observe primary pointer input. The controller must not mutate or depend on grid selection; the focused smoke must prove adjacent state isolation.
-- Camera/parent transforms can produce wrong cells if pointer coordinates are treated as global pixels. Convert through the `WorldObjects` local transform before using the shared projection utility.
-- Visual or collision-bound hit testing would couple mechanics to temporary art. Resolve candidates solely from semantic cells and documented sibling order.
-- A selected Node reference can become stale if an object leaves the tree. Clearing or validating the reference must be safe; object removal behavior beyond avoiding an invalid retained selection is not a lifecycle system in this slice.
-- Rollback boundary: the selection controller, its `WorldObjects` scene attachment, selected-state additions to the reusable world-object scene/script, and the focused smoke. Reverting those changes must restore the verified visual-layering slice with no migration.
+- Inventing resources outside the mandate would silently change game scope. The Builder must derive entries from repository authority and stop rather than guess if those sources conflict.
+- Treating display names or icon paths as identifiers would couple mechanics to a reskin. Only stable semantic IDs may cross into later gameplay contracts.
+- Permissive parsing could publish a partial or ambiguous catalog. Validation must complete before definitions become available.
+- Godot dictionary/JSON values are Variants; use explicit typed conversion and deterministic validation to avoid warning-as-error failures.
+- Rollback boundary: the new resource-definition model, catalog loader, project-owned definition data, and focused smoke. Reverting those files must restore the verified Phase 1 state with no migration or scene changes.
 
 ## Reskin boundary and placeholder-asset impact
 
-- `grid_cell`, candidate resolution, selected identity, and tie-breaking are mechanics. They must not depend on textures, icons, fonts, colors, copy, polygon dimensions, animation styling, audio, or final theme resources.
-- `PlaceholderVisual` and the new selection marker remain temporary, replaceable presentation children. No image file is added or treated as final art.
-- Selection feedback must expose semantic style slots/properties and a non-color geometry cue so Kevin can replace its color, shape, icon, or entire visual subtree without changing controller or gameplay code.
-- Pointer targeting is cell-based, not sprite-bound; changing placeholder dimensions or art composition must not alter which object is selected.
-- The substitution smoke proves mechanics/presentation decoupling only. Pointer feel, overlap readability, and final visual quality remain explicit manual GUI QA items.
+- Stable resource IDs and catalog validation are gameplay/data contracts. Display name, description, semantic icon slot, and semantic style slot are replaceable presentation metadata.
+- The data file may reference semantic slots such as `resource.<id>.icon` and `resource.<id>.style`; it must not require a particular texture filename, pixel size, font, color, or final theme.
+- No image file is added. Any existing images remain temporary placeholders and are not part of catalog validation.
+- Resource meaning must be readable from semantic ID/text and must never be communicated solely by color or placeholder appearance.
+- The substitution smoke proves catalog mechanics remain unchanged when display metadata is replaced; it does not claim subjective visual quality.

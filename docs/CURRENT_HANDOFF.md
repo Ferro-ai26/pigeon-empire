@@ -1,11 +1,10 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Planning base commit: `80a15a6`
-Builder base commit: `b523e70`
-Objective: Add runtime-only rooftop world-object selection through semantic grid cells, with deterministic sibling-order tie-breaking and replaceable non-color-only selection feedback.
+Planning base commit: `729f749`
+Objective: Add a typed, data-driven Phase 2 resource-definition catalog with stable semantic IDs, deterministic validation/lookup, and replaceable presentation metadata.
 
 Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . --import`
@@ -14,13 +13,10 @@ Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_isometric_grid_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_camera_controls_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_visual_layering_smoke.gd`
-- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_world_object_selection_smoke.gd` with exactly one `PHASE01_WORLD_OBJECT_SELECTION_SMOKE PASS`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_world_object_selection_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_catalog_smoke.gd` with exactly one `PHASE02_RESOURCE_CATALOG_SMOKE PASS`
 - `git diff --check`
 
-Known blocker status: None. Manual GUI pointer feel and selection-marker readability remain unverified and must not be claimed by headless QA.
+Known blocker status: None. The Phase 1 implementation files are present and the focused world-object-selection smoke passed on planning entry. Manual GUI pointer feel and marker readability remain unverified and are not part of this data-only slice.
 
-Builder implementation: `WorldObjects` now uses `RooftopWorldSelection` for semantic-cell resolution, reverse-sibling tie-breaking, pointer projection delegation, empty-cell clearing, and invalid-cell rejection. `RooftopWorldObject` owns runtime selected state and drives the editor-visible `SelectionFeedback` geometry through replaceable style tokens. The focused smoke covers both occupied placeholders, empty/invalid behavior, tie-breaking, callable projection, adjacent-state isolation, and restored presentation-token substitution.
-
-QA verification: Builder commit `4f2fd6d` passed headless import/startup, baseline, all prior Phase 1 smokes, the focused world-object-selection smoke, exact marker-count checks, reskin token substitution, and `git diff --check`. No integration fix was required. Manual GUI pointer feel and marker readability remain unverified.
-
-Builder boundary: Implement only the approved world-object-selection slice in `docs/ACTIVE_PHASE.md`. Do not add details UI, placement, buildings, resources, pigeons, persistence, or begin Phase 2. Preserve semantic-cell targeting and the reskin boundary; placeholder art dimensions must never define interaction.
+Builder boundary: Implement only the approved resource-definition catalog slice in `docs/ACTIVE_PHASE.md`. Use only the authoritative resource set already established by the repository; do not invent a resource or currency. Do not add mutable counters, gathering, UI, persistence, costs, production, or begin another Phase 2 objective. Keep semantic identity independent from replaceable display metadata and placeholder assets.
