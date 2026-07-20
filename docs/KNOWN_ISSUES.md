@@ -4,6 +4,8 @@ No known parser, missing-resource, grid-mechanics, camera-mechanics, visual-laye
 
 No known parser, validation, lookup, ordering, partial-publication, or presentation-metadata-coupling issue in the built Phase 2 resource-catalog slice.
 
+No known initialization, balance-query, credit/debit, affordability, copied-view, or presentation-metadata-coupling issue in the built Phase 2 resource-ledger slice.
+
 QA verified the visual-layering slice at builder commit `85f1d9f` with no integration fix required.
 
 QA verified the world-object-selection slice at builder commit `4f2fd6d` with no integration fix required.

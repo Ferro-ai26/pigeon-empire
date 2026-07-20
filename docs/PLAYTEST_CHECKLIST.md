@@ -33,5 +33,6 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 
 - [x] Builder focused resource-catalog smoke passes authoritative loading, deterministic source order, known/unknown lookup, copied enumeration, malformed and duplicate rejection without partial publication, and restored presentation-metadata substitution.
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, the focused resource-catalog smoke, exact marker-count checks, metadata substitution/restoration, and `git diff --check`.
+- [x] Builder focused resource-ledger smoke passes zero initialization in catalog order, independent counters, guarded credit/debit, affordability, all rejection paths without mutation, copied views, and presentation-metadata substitution.
 
 This slice has no player-facing behavior or subjective visual acceptance item.
