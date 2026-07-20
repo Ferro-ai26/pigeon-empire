@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `729f749`
@@ -25,3 +25,5 @@ Known blocker status: None. The Phase 1 implementation files are present and the
 Builder validation: Godot 4.6.2 headless import and startup passed; startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`. Baseline, all four Phase 1 smokes, and `phase02_resource_catalog_smoke.gd` passed; the Phase 2 smoke printed exactly one required pass marker. `git diff --check` passed. The focused smoke covers valid loading, source order, known/unknown lookup, copied enumeration, duplicate/missing/empty/type/object rejection without partial publication, and restored presentation-metadata substitution.
 
 QA boundary: Verify only the approved resource-definition catalog slice in `docs/ACTIVE_PHASE.md`. Do not add mutable counters, gathering, UI, persistence, costs, production, or begin another Phase 2 objective. Manual visual approval is not applicable to this data-only slice; the reskin check is a runtime metadata-substitution test, not a visual test.
+
+QA result: Verified builder commit `d79fc1f` with no integration fix required. Godot 4.6.2 headless import/startup, baseline smoke, all four Phase 1 smokes, the focused Phase 2 catalog smoke, exact startup/Phase 2 marker counts, metadata substitution/restoration, and `git diff --check` passed. Persistence testing was not applicable because no mutable or saved state changed.

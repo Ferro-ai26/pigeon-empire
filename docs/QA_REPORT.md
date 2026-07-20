@@ -43,3 +43,15 @@
 - Reskin check passed: the focused smoke temporarily changes the selection marker's replaceable color and width tokens, proves semantic selection identity and behavior remain unchanged, and restores both tokens. Target resolution depends only on semantic cells and reverse sibling order.
 - Persistence/save tests: not applicable; selection state is runtime-only and the builder diff contains no save or schema changes.
 - Manual GUI status: not tested. Pointer feel after camera pan/zoom and selection-marker readability remain unchecked; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 2 — Resource Foundation
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `d79fc1f`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), bootstrap smoke, all four Phase 1 smokes, resource-catalog smoke (exactly one `PHASE02_RESOURCE_CATALOG_SMOKE PASS`), and `git diff --check`.
+- Reskin check passed: the focused smoke substitutes all display metadata for `crumbs`, proves semantic identity, lookup, validation, and source order remain unchanged, restores the original metadata, and reloads successfully. The catalog uses semantic icon/style slots and contains no texture, font, color, dimension, animation, audio, node-name, or final-theme dependency.
+- Atomicity/read-only checks passed: malformed and duplicate candidate sets preserve the previously published catalog; unknown lookup is non-mutating; ordered enumeration returns copied storage.
+- Persistence/save tests: not applicable; the slice adds immutable definition data only and no save, schema, autoload, balance, or gameplay state.
+- Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.

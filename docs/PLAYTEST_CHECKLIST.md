@@ -32,6 +32,6 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 ## Phase 2 — Resource foundation
 
 - [x] Builder focused resource-catalog smoke passes authoritative loading, deterministic source order, known/unknown lookup, copied enumeration, malformed and duplicate rejection without partial publication, and restored presentation-metadata substitution.
-- [ ] QA reruns headless import/startup, baseline, all Phase 1 smokes, the focused resource-catalog smoke, exact marker-count checks, and `git diff --check`.
+- [x] QA reran headless import/startup, baseline, all Phase 1 smokes, the focused resource-catalog smoke, exact marker-count checks, metadata substitution/restoration, and `git diff --check`.
 
 This slice has no player-facing behavior or subjective visual acceptance item.
