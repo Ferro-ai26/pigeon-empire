@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `4b361fa`
@@ -27,6 +27,8 @@ Required validations:
 
 Validation result: All required commands passed on the coherent builder tree: import, startup with exactly one `PIGEON_EMPIRE_STARTUP_OK`, baseline smoke, all four Phase 1 smokes, resource-catalog smoke, resource-ledger smoke with exactly one `PHASE02_RESOURCE_LEDGER_SMOKE PASS`, and `git diff --check`.
 
+QA result: VERIFIED at builder commit `178f874`; no integration fix was required. QA independently reran every required validation and confirmed semantic-ID-only ledger identity, copied views, deterministic rejection/non-mutation behavior, and presentation-metadata substitution without mechanics changes.
+
 Known blocker status: None. Entry tree was clean at builder base `741a43f`, which is based on validated `main` commit `4b361fa`. Manual GUI status remains outside this runtime-only slice.
 
-QA boundary: Verify only the approved ledger slice in `docs/ACTIVE_PHASE.md`, including exact marker counts and non-mutation/reskin checks. Do not add gathering, UI, production, costs, scenes, autoloads, persistence, save/schema work, presentation assets, or another Phase 2 objective.
+Integration boundary: This approved ledger slice is verified. Do not add gathering, UI, production, costs, scenes, autoloads, persistence, save/schema work, presentation assets, or another Phase 2 objective as part of this integration.

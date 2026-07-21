@@ -55,3 +55,15 @@
 - Atomicity/read-only checks passed: malformed and duplicate candidate sets preserve the previously published catalog; unknown lookup is non-mutating; ordered enumeration returns copied storage.
 - Persistence/save tests: not applicable; the slice adds immutable definition data only and no save, schema, autoload, balance, or gameplay state.
 - Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 2 — Runtime Resource Ledger
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `178f874`
+- QA integration fix: none required.
+- Godot: `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, resource-catalog smoke, resource-ledger smoke (exactly one `PHASE02_RESOURCE_LEDGER_SMOKE PASS`), and `git diff --check`.
+- Ledger checks passed: authoritative catalog-order zero initialization, independent integer counters, guarded credit/debit and affordability, deterministic unknown/invalid rejection without mutation, non-negative balances, and copied ID/snapshot collections.
+- Reskin check passed: the focused smoke substitutes every display metadata field in an equivalent catalog and proves membership, order, initial balances, and credit/debit behavior remain unchanged. The ledger depends only on semantic IDs and reads no presentation asset.
+- Persistence/save tests: not applicable; the ledger is runtime-only and the builder diff contains no save, schema, autoload, scene, or startup integration change.
+- Manual GUI status: not applicable to this runtime-only slice; no GUI, browser/export, or visual-quality success is claimed.
