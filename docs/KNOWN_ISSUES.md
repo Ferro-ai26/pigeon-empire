@@ -6,6 +6,8 @@ No known parser, validation, lookup, ordering, partial-publication, or presentat
 
 No known initialization, balance-query, credit/debit, affordability, copied-view, or presentation-metadata-coupling issue in the built Phase 2 resource-ledger slice.
 
+No known parser, reward-contract, resource-target validation, ordering, lookup, atomic-publication, copied-view, or presentation-metadata-coupling issue in the built Phase 2 gathering-action catalog slice. GUI and export behavior were not involved or claimed.
+
 QA verified the visual-layering slice at builder commit `85f1d9f` with no integration fix required.
 
 QA verified the world-object-selection slice at builder commit `4f2fd6d` with no integration fix required.

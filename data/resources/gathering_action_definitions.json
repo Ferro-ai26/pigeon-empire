@@ -1,0 +1,29 @@
+[
+  {
+    "id": "gather_crumbs",
+    "resource_id": "crumbs",
+    "reward_amount": 1,
+    "display_name": "Gather Crumbs",
+    "short_description": "Search the rooftop for useful food scraps.",
+    "icon_slot": "action.gather_crumbs.icon",
+    "style_slot": "action.gather_crumbs.style"
+  },
+  {
+    "id": "gather_twigs",
+    "resource_id": "twigs",
+    "reward_amount": 1,
+    "display_name": "Gather Twigs",
+    "short_description": "Collect small pieces of rooftop building material.",
+    "icon_slot": "action.gather_twigs.icon",
+    "style_slot": "action.gather_twigs.style"
+  },
+  {
+    "id": "gather_shinies",
+    "resource_id": "shinies",
+    "reward_amount": 1,
+    "display_name": "Gather Shinies",
+    "short_description": "Look for interesting objects prized by the colony.",
+    "icon_slot": "action.gather_shinies.icon",
+    "style_slot": "action.gather_shinies.style"
+  }
+]
