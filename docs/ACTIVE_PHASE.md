@@ -5,53 +5,50 @@ Status: Approved slice — ready for build
 
 ## Objective
 
-Add an immutable, typed gathering-action definition catalog that data-drives the initial manual resource rewards without executing actions, changing balances, or adding input/UI.
+Add a runtime-only gathering action executor that resolves a semantic action ID through the verified gathering catalog and atomically credits its declared reward to the verified resource ledger.
 
 ## Gameplay purpose
 
-Give the later gathering executor one authoritative mapping from stable action IDs to semantic resource IDs and positive integer reward amounts, so gathering balance is not hardcoded in input, world, or UI scripts.
+Make the three starter gathering actions mechanically executable through one narrow, deterministic API, proving the first manual resource-gain loop without coupling it to UI, input, world objects, or presentation assets.
 
 ## Exact scope
 
-- Add authoritative JSON definitions for exactly three initial manual actions, one each awarding `crumbs`, `twigs`, and `shinies`.
-- Give each definition a stable semantic action ID, known semantic resource ID, positive integer reward amount, and presentation-only display metadata slots.
-- Add typed immutable definition and catalog APIs with deterministic source order and lookup by action ID.
-- Validate the complete candidate dataset before atomic publication; reject duplicate/empty action IDs, unknown resource IDs, non-positive/non-integer rewards, missing fields, malformed roots/entries, and invalid field types.
-- Preserve the previously published valid catalog after every rejected reload.
-- Return copied ordered collections so callers cannot mutate catalog membership or order.
-- Add a focused headless smoke covering authoritative membership/order, typed lookup, reward contracts, every rejection class, atomic failed reloads, copied collections, unknown non-mutating lookup, and presentation-metadata substitution.
+- Add a typed runtime-only executor initialized with a valid `GatheringActionCatalog` and `ResourceLedger`.
+- Expose one callable operation that accepts a semantic gathering action ID, resolves its immutable definition, and credits exactly that definition's resource ID and reward amount to the ledger.
+- Reject unknown/empty action IDs and missing dependencies deterministically without mutating any ledger balance.
+- Ensure one successful call produces exactly one ledger credit and does not mutate the action catalog or unrelated resource balances.
+- Return a small typed/semantic result or deterministic status suitable for later UI/input adapters without exposing presentation metadata as a mechanical dependency.
+- Add a focused headless smoke covering every starter action, repeated execution, exact deltas, unrelated-balance isolation, invalid calls, missing dependencies, catalog immutability, and presentation-metadata substitution.
 
 ## Non-goals
 
-- Executing gathering actions, crediting/debiting the resource ledger, tap/click input, cooldowns, timed/passive production, random rewards, costs, inventory capacity, buildings, pigeons, jobs, objectives, upgrades, or economy tuning beyond the three starter rewards.
-- UI scenes, buttons, labels, icons, animations, audio, feedback copy, world-object changes, camera/grid changes, or startup integration.
-- Autoloads, signals/event buses, save files, schema versions, migrations, autosave, offline gains, or persistence.
-- New resources/currencies, resource conversion, multi-resource rewards, loot tables, final art, Android/browser/export work, monetization, combat, multiplayer, or unrelated refactors.
+- Buttons, labels, HUD/resource counters, tap/click input, world-object interaction, signals/event buses, animations, audio, feedback copy, cooldowns, timers, passive production, random rewards, costs, inventory capacity, buildings, pigeons, jobs, objectives, upgrades, or economy changes.
+- Changes to starter action IDs, resource targets, reward amounts, resource membership, or catalog order.
+- Autoloads, scene/startup integration, persistence, save files, schema versions, migrations, autosave, or offline gains.
+- Multi-resource rewards, loot tables, final art, Android/browser/export work, monetization, combat, multiplayer, or unrelated refactors.
 
 ## Likely affected systems/files
 
-- `data/resources/gathering_action_definitions.json` (new authoritative starter-action data)
-- `scripts/resources/gathering_action_definition.gd` (new typed immutable definition)
-- `scripts/resources/gathering_action_catalog.gd` (new atomic catalog/validation owner)
-- `tests/phase02_gathering_action_catalog_smoke.gd` (new focused smoke)
+- `scripts/resources/gathering_action_executor.gd` (new typed runtime execution boundary)
+- `tests/phase02_gathering_action_executor_smoke.gd` (new focused smoke)
 
-The Builder may make a narrowly required read-only compatibility addition to `ResourceCatalog`, but must not change authoritative resource membership, resource balances, scenes, project autoloads, or gameplay integration.
+Narrow compatibility changes to the existing catalog or ledger are permitted only if required to support typed read-only execution or deterministic failure reporting. Do not change authoritative data, balances, scenes, autoloads, or startup behavior.
 
 ## Acceptance criteria
 
 1. Headless import and startup succeed, with startup printing exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-2. The authoritative action catalog loads exactly three definitions in source order: `gather_crumbs`, `gather_twigs`, and `gather_shinies`.
-3. Those definitions target `crumbs`, `twigs`, and `shinies` respectively, and each reward is a positive integer declared in JSON rather than a gameplay, input, scene, or UI script.
-4. Every target resource ID is validated against a successfully loaded authoritative `ResourceCatalog`; unknown target IDs reject the complete candidate reload.
-5. Definition identity and mechanics depend only on stable action ID, semantic resource ID, and reward amount; display metadata, texture, icon appearance, color, font, copy, layout, animation, audio, dimensions, and node names are not mechanical keys.
-6. Known lookup returns a typed immutable definition; unknown lookup returns `null`, does not mutate state, and does not alter deterministic order.
-7. Duplicate or empty action IDs, missing fields, malformed root/entry shapes, invalid field types, unknown resource IDs, and zero/negative/non-integer rewards fail with deterministic errors.
-8. Candidate data is fully validated before publication; after every rejected reload, the previous valid catalog remains intact and queryable with unchanged membership, order, targets, and rewards.
-9. Ordered definition/ID collections are copies; mutating a returned collection cannot alter internal catalog state.
-10. Replacing all presentation metadata in equivalent entries leaves action identity, order, target resource IDs, rewards, lookup, and validation unchanged.
-11. No ledger balance, scene, autoload, save/schema, UI, input, world, production, or persistent state is introduced or changed.
-12. The focused smoke prints exactly one `PHASE02_GATHERING_ACTION_CATALOG_SMOKE PASS` and exits 0.
-13. Headless import/startup, baseline smoke, all four Phase 1 smokes, both existing Phase 2 smokes, the new focused smoke, and `git diff --check` pass.
+2. A valid executor uses only the supplied `GatheringActionCatalog` and `ResourceLedger`; it does not load JSON, scenes, textures, or presentation resources itself.
+3. Executing `gather_crumbs`, `gather_twigs`, or `gather_shinies` credits exactly the resource and positive integer reward declared by that action definition.
+4. Each successful call applies exactly one credit; repeated calls accumulate deterministically by the declared reward amount.
+5. Executing one action leaves every unrelated resource balance unchanged.
+6. Empty and unknown action IDs fail deterministically, report a stable semantic failure status, and leave the complete ledger snapshot unchanged.
+7. Missing/null catalog or ledger dependencies cannot produce a successful execution and cannot mutate external state.
+8. Execution does not mutate catalog membership, source order, definitions, action IDs, targets, or rewards.
+9. Mechanics depend only on semantic action ID, semantic resource ID, and reward amount. Display name, description, icon/style slots, textures, colors, fonts, copy, layout, animation, audio, image dimensions, and node names are not used to resolve or award an action.
+10. Replacing every presentation metadata field in an equivalent valid action catalog leaves execution results and ledger deltas unchanged.
+11. No UI, input, scene, world, autoload, save/schema, persistent state, timer, production, or new resource/currency is introduced or changed.
+12. The focused smoke prints exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS` and exits 0.
+13. Headless import/startup, baseline smoke, all four Phase 1 smokes, all three existing Phase 2 smokes, the new focused smoke, and `git diff --check` pass.
 
 ## Focused validation commands
 
@@ -66,25 +63,25 @@ The Builder may make a narrowly required read-only compatibility addition to `Re
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_catalog_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_ledger_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_catalog_smoke.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd
 git diff --check
 ```
 
 ## Save/schema impact
 
-None. Definitions are immutable project data, the catalog is runtime-only, and this slice does not read or write save data. Stable action/resource IDs are suitable for later versioned persistence, but no save contract or migration is introduced.
+None. The executor and ledger balances remain runtime-only. Stable semantic action/resource IDs are used, but this slice introduces no save contract, persisted balance, schema version, or migration.
 
 ## Risks and rollback boundary
 
-- Publishing while parsing could expose a partial catalog after a late invalid entry; validate candidate order/lookup structures completely before replacing published state.
-- Accepting unknown resource IDs would create actions that a ledger cannot execute; validate targets against the authoritative resource catalog.
-- Hardcoding reward values in future input/UI code would defeat data-driven balance; keep reward amounts exclusively in authoritative action data and typed definitions.
-- Writable definition fields or exposed internal arrays would let callers silently mutate balance data; use typed getters and copied collections.
-- Godot JSON values are Variants; explicitly validate exact field types and use explicit typed locals to satisfy warning-as-error validation.
-- Rollback boundary: the new JSON, definition/catalog scripts, and focused smoke. Reverting those files restores the verified ledger-only Phase 2 state without migration or scene changes.
+- Bypassing the catalog and hardcoding reward values would create duplicated balance authority; execution must read target and amount only from the resolved immutable definition.
+- A failure path that credits before validation could partially mutate the ledger; resolve and validate dependencies/action before performing the single credit.
+- Returning presentation-heavy results could couple later adapters to placeholder copy/assets; expose semantic status and IDs only.
+- Broad ledger/catalog changes could destabilize already verified contracts; prefer a new narrow executor and retain existing APIs.
+- Rollback boundary: the new executor script, focused smoke, and any narrowly justified compatibility lines. Reverting them restores the verified catalog-plus-ledger state with no migration or scene changes.
 
 ## Reskin boundary and placeholder-asset impact
 
-- Action ID, target semantic resource ID, and reward amount are gameplay/data contracts. Display names, descriptions, icon/style slots, textures, colors, fonts, copy, layout, animation, and audio are replaceable presentation metadata.
-- No image or other presentation asset is added or read; all existing images remain temporary placeholders.
-- Definitions may carry semantic icon/style slot strings, but mechanics must not load those assets or infer action/resource meaning from their appearance.
-- The focused smoke must substitute every presentation field and prove identity, target, reward, lookup, validation, and order remain unchanged. This verifies the reskin boundary, not subjective visual quality.
+- Action ID, resource ID, and reward amount are the complete mechanical execution contract. All display metadata and visual/audio styling remain replaceable presentation concerns.
+- No image, font, audio, theme, scene, or other presentation asset is added, loaded, or changed; all existing image files remain temporary placeholders.
+- The executor must not inspect icon/style slots or infer mechanics from texture appearance, color, copy, dimensions, layout, animation, audio, or node names.
+- The focused smoke must rebuild an equivalent catalog with every presentation field replaced, execute the same action sequence, and prove identical semantic results and ledger deltas. This verifies decoupling only, not subjective visual quality.

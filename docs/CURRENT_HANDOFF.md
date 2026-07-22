@@ -1,12 +1,10 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Planning base commit: `6fa2dde`
-Builder base commit: `61e8a99`
-Builder commit: `0f9aaca`
-Objective: Add an immutable, typed gathering-action definition catalog that data-drives the initial manual resource rewards without executing actions, changing balances, or adding input/UI.
+Planning base commit: `f4742b42dbdbe7bc306e59731d634973e127d397`
+Objective: Add a runtime-only gathering action executor that resolves a semantic action ID through the verified gathering catalog and atomically credits its declared reward to the verified resource ledger.
 
 Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . --import`
@@ -18,17 +16,12 @@ Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase01_world_object_selection_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_catalog_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_ledger_smoke.gd`
-- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_catalog_smoke.gd` with exactly one `PHASE02_GATHERING_ACTION_CATALOG_SMOKE PASS`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_catalog_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd` with exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`
 - `git diff --check`
 
-Known blocker status: None. Entry tree was clean at `61e8a99`; `origin/main` remained the validated `6fa2dde` base and was an ancestor of `chucky-dev` after fetch.
+Known blocker status: None. Entry tree was clean at `f4742b4`; `main`, `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to that verified commit before planning. The verified catalog and ledger APIs support this bounded executor slice without authoritative data or scene changes.
 
-Builder result: `data/resources/gathering_action_definitions.json` now owns the three starter rewards in deterministic order. `GatheringActionDefinition` exposes read-only typed getters. `GatheringActionCatalog` validates complete candidates against a loaded authoritative `ResourceCatalog`, publishes atomically, preserves prior valid state on rejection, and returns copied ordered collections. `tests/phase02_gathering_action_catalog_smoke.gd` covers membership/order, lookup, reward contracts, all required rejection classes, atomicity, copied views, and full presentation-metadata substitution.
+Builder scope: Implement only the runtime gathering executor and focused smoke described in `docs/ACTIVE_PHASE.md`. Keep action resolution and rewards semantic/data-driven. Do not add UI/input/world integration, timers, production, persistence, autoloads, scenes, balance changes, or another objective.
 
-Builder validation: All commands above passed on 2026-07-21. Startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`; the focused smoke printed exactly one `PHASE02_GATHERING_ACTION_CATALOG_SMOKE PASS`; `git diff --check` passed. This is headless mechanics/reskin-boundary evidence only, not GUI or export validation.
-
-QA result: VERIFIED at builder commit `0f9aaca`; no integration fix was required. QA independently reran every required validation and confirmed atomic catalog publication, immutable/copied query surfaces, authoritative resource-target validation, and presentation-metadata substitution without mechanics changes.
-
-Integration boundary: This approved gathering-action catalog slice is verified. Do not execute gathering, mutate the ledger, add UI/input/world integration, add persistence, or start another objective as part of this integration.
-
-Scope boundary: Build only the immutable data definitions/catalog and focused smoke described in `docs/ACTIVE_PHASE.md`. Do not execute gathering, mutate the ledger, add UI/input/world integration, add persistence, or start another objective.
+Reskin boundary: The executor may depend only on semantic action ID, semantic resource ID, and reward amount. It must not read display metadata or presentation assets. The focused smoke must substitute all presentation metadata and prove identical execution results and ledger deltas.
