@@ -1,10 +1,16 @@
 # Current Handoff
 
-State: READY_FOR_BUILD
+State: READY_FOR_QA
 
 Branch: `chucky-dev`
 Planning base commit: `f4742b42dbdbe7bc306e59731d634973e127d397`
+Builder base commit: `ee565ab8099cd6e10c7be4aba252069909f3ff4c`
 Objective: Add a runtime-only gathering action executor that resolves a semantic action ID through the verified gathering catalog and atomically credits its declared reward to the verified resource ledger.
+
+Built implementation:
+- `scripts/resources/gathering_action_executor.gd` owns the runtime-only typed execution boundary. It receives its catalog and ledger dependencies, resolves one semantic action ID, applies one ledger credit, and returns an `ExecutionResult` containing semantic status, action ID, resource ID, and reward amount only.
+- Stable rejection statuses cover missing catalog, missing ledger, empty action ID, unknown action ID, and ledger-credit rejection; all validation occurs before the sole possible credit call.
+- `tests/phase02_gathering_action_executor_smoke.gd` verifies all starter actions, repeated exact accumulation, unrelated-balance isolation, complete failure snapshots, missing dependencies, catalog immutability, and equivalent execution after every presentation metadata field is substituted.
 
 Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . --import`
@@ -20,8 +26,10 @@ Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd` with exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`
 - `git diff --check`
 
-Known blocker status: None. Entry tree was clean at `f4742b4`; `main`, `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to that verified commit before planning. The verified catalog and ledger APIs support this bounded executor slice without authoritative data or scene changes.
+Builder validation: All commands above passed with Godot 4.6.2. Startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`; the focused smoke printed exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`; `git diff --check` passed.
 
-Builder scope: Implement only the runtime gathering executor and focused smoke described in `docs/ACTIVE_PHASE.md`. Keep action resolution and rewards semantic/data-driven. Do not add UI/input/world integration, timers, production, persistence, autoloads, scenes, balance changes, or another objective.
+Known blocker status: None. Builder entry tree was clean at `ee565ab8`; that planning commit was based on validated `main`/`origin/main` commit `f4742b4`. No authoritative data, balances, scenes, startup behavior, or presentation assets changed.
+
+QA scope: Review and rerun the listed validation suite for the runtime gathering executor slice. Do not begin another objective or add UI/input/world integration, timers, production, persistence, autoloads, scenes, or balance changes.
 
 Reskin boundary: The executor may depend only on semantic action ID, semantic resource ID, and reward amount. It must not read display metadata or presentation assets. The focused smoke must substitute all presentation metadata and prove identical execution results and ledger deltas.
