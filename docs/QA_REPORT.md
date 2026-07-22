@@ -67,3 +67,15 @@
 - Reskin check passed: the focused smoke substitutes every display metadata field in an equivalent catalog and proves membership, order, initial balances, and credit/debit behavior remain unchanged. The ledger depends only on semantic IDs and reads no presentation asset.
 - Persistence/save tests: not applicable; the ledger is runtime-only and the builder diff contains no save, schema, autoload, scene, or startup integration change.
 - Manual GUI status: not applicable to this runtime-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 2 — Gathering Action Catalog
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `0f9aaca`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all three Phase 2 smokes, gathering-action catalog smoke (exactly one `PHASE02_GATHERING_ACTION_CATALOG_SMOKE PASS`), and `git diff --check`.
+- Catalog checks passed: exact authoritative membership/order, typed known and non-mutating unknown lookup, positive integer JSON rewards, authoritative resource-ID validation, deterministic rejection coverage, atomic failed reloads, and copied ordered collections.
+- Reskin check passed: the focused smoke substitutes every display metadata field and proves identity, order, targets, rewards, lookup, and validation remain unchanged. Mechanics depend only on stable action ID, semantic resource ID, and reward amount; no presentation asset is loaded.
+- Persistence/save tests: not applicable; this immutable data-only slice contains no save, schema, autoload, scene, ledger-balance, or startup integration change.
+- Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.

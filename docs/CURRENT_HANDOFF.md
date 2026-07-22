@@ -1,11 +1,11 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `6fa2dde`
 Builder base commit: `61e8a99`
-Builder result: Pending final commit at handoff-write time; validate the committed `chucky-dev` tip.
+Builder commit: `0f9aaca`
 Objective: Add an immutable, typed gathering-action definition catalog that data-drives the initial manual resource rewards without executing actions, changing balances, or adding input/UI.
 
 Required validations:
@@ -26,5 +26,9 @@ Known blocker status: None. Entry tree was clean at `61e8a99`; `origin/main` rem
 Builder result: `data/resources/gathering_action_definitions.json` now owns the three starter rewards in deterministic order. `GatheringActionDefinition` exposes read-only typed getters. `GatheringActionCatalog` validates complete candidates against a loaded authoritative `ResourceCatalog`, publishes atomically, preserves prior valid state on rejection, and returns copied ordered collections. `tests/phase02_gathering_action_catalog_smoke.gd` covers membership/order, lookup, reward contracts, all required rejection classes, atomicity, copied views, and full presentation-metadata substitution.
 
 Builder validation: All commands above passed on 2026-07-21. Startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`; the focused smoke printed exactly one `PHASE02_GATHERING_ACTION_CATALOG_SMOKE PASS`; `git diff --check` passed. This is headless mechanics/reskin-boundary evidence only, not GUI or export validation.
+
+QA result: VERIFIED at builder commit `0f9aaca`; no integration fix was required. QA independently reran every required validation and confirmed atomic catalog publication, immutable/copied query surfaces, authoritative resource-target validation, and presentation-metadata substitution without mechanics changes.
+
+Integration boundary: This approved gathering-action catalog slice is verified. Do not execute gathering, mutate the ledger, add UI/input/world integration, add persistence, or start another objective as part of this integration.
 
 Scope boundary: Build only the immutable data definitions/catalog and focused smoke described in `docs/ACTIVE_PHASE.md`. Do not execute gathering, mutate the ledger, add UI/input/world integration, add persistence, or start another objective.

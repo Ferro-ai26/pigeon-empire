@@ -36,6 +36,6 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [x] Builder focused resource-ledger smoke passes zero initialization in catalog order, independent counters, guarded credit/debit, affordability, all rejection paths without mutation, copied views, and presentation-metadata substitution.
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, resource-catalog and resource-ledger smokes, exact marker-count checks, metadata substitution, and `git diff --check` for the resource-ledger slice.
 - [x] Builder focused gathering-action catalog smoke passes authoritative membership/order, typed lookup and rewards, resource-ID validation, every required malformed-data rejection with atomic state retention, copied collections, unknown lookup, and full presentation-metadata substitution.
-- [ ] QA reruns headless import/startup, baseline, all Phase 1 smokes, all three Phase 2 smokes, exact marker-count checks, metadata substitution, and `git diff --check` for the gathering-action catalog slice.
+- [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all three Phase 2 smokes, exact marker-count checks, metadata substitution, and `git diff --check` for the gathering-action catalog slice.
 
 This slice has no player-facing behavior or subjective visual acceptance item.
