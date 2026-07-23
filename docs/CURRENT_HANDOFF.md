@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `f4742b42dbdbe7bc306e59731d634973e127d397`
@@ -28,8 +28,10 @@ Required validations:
 
 Builder validation: All commands above passed with Godot 4.6.2. Startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`; the focused smoke printed exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`; `git diff --check` passed.
 
+QA verification: Builder commit `dd199c9260f03374334f5ff3c8c9c2764cd3e903` was reviewed against all acceptance criteria and non-goals. QA independently passed headless import/startup, baseline, all four Phase 1 smokes, all four Phase 2 smokes, exact marker counts, presentation-metadata substitution, parser/error-log checks, and `git diff --check`. No integration fix was required.
+
 Known blocker status: None. Builder entry tree was clean at `ee565ab8`; that planning commit was based on validated `main`/`origin/main` commit `f4742b4`. No authoritative data, balances, scenes, startup behavior, or presentation assets changed.
 
-QA scope: Review and rerun the listed validation suite for the runtime gathering executor slice. Do not begin another objective or add UI/input/world integration, timers, production, persistence, autoloads, scenes, or balance changes.
+Verified scope: The runtime gathering executor slice is approved for integration. No UI/input/world integration, timers, production, persistence, autoloads, scenes, or balance changes were introduced.
 
 Reskin boundary: The executor may depend only on semantic action ID, semantic resource ID, and reward amount. It must not read display metadata or presentation assets. The focused smoke must substitute all presentation metadata and prove identical execution results and ledger deltas.

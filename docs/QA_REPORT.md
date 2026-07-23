@@ -79,3 +79,15 @@
 - Reskin check passed: the focused smoke substitutes every display metadata field and proves identity, order, targets, rewards, lookup, and validation remain unchanged. Mechanics depend only on stable action ID, semantic resource ID, and reward amount; no presentation asset is loaded.
 - Persistence/save tests: not applicable; this immutable data-only slice contains no save, schema, autoload, scene, ledger-balance, or startup integration change.
 - Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 2 — Gathering Action Executor
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `dd199c9260f03374334f5ff3c8c9c2764cd3e903`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all four Phase 2 smokes, gathering-action executor smoke (exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`), zero parser/error-log matches, and `git diff --check`.
+- Execution checks passed: every starter action resolves through the supplied immutable catalog, applies exactly one declared positive reward to the supplied ledger, accumulates deterministically, isolates unrelated balances, and returns presentation-neutral semantic results. Empty/unknown IDs and missing dependencies reject without ledger mutation.
+- Reskin check passed: the focused smoke replaces every action presentation metadata field in an equivalent catalog and proves identical semantic mechanics and ledger deltas. The executor reads only semantic action ID, semantic resource ID, and reward amount; it loads no presentation resource.
+- Persistence/save tests: not applicable; the executor and ledger remain runtime-only and the builder diff contains no save, schema, autoload, scene, or startup integration change.
+- Manual GUI status: not applicable to this runtime-only slice; no GUI, browser/export, or visual-quality success is claimed.

@@ -38,5 +38,6 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [x] Builder focused gathering-action catalog smoke passes authoritative membership/order, typed lookup and rewards, resource-ID validation, every required malformed-data rejection with atomic state retention, copied collections, unknown lookup, and full presentation-metadata substitution.
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all three Phase 2 smokes, exact marker-count checks, metadata substitution, and `git diff --check` for the gathering-action catalog slice.
 - [x] Builder focused gathering-action executor smoke passes all starter actions, exact isolated credits, repeated accumulation, invalid and missing-dependency rejection without mutation, catalog immutability, semantic results, and full presentation-metadata substitution.
+- [x] QA reran headless import/startup, baseline, all four Phase 1 smokes, all four Phase 2 smokes, exact marker-count checks, presentation-metadata substitution, parser/error-log checks, and `git diff --check` for the gathering-action executor slice.
 
 This slice has no player-facing behavior or subjective visual acceptance item.
