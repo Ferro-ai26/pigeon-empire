@@ -5,50 +5,55 @@ Status: Approved slice — ready for build
 
 ## Objective
 
-Add a runtime-only gathering action executor that resolves a semantic action ID through the verified gathering catalog and atomically credits its declared reward to the verified resource ledger.
+Add an editor-visible, read-only resource HUD panel that renders the verified resource catalog in authoritative order and refreshes displayed balances from the verified runtime ledger through a narrow presentation adapter.
 
 ## Gameplay purpose
 
-Make the three starter gathering actions mechanically executable through one narrow, deterministic API, proving the first manual resource-gain loop without coupling it to UI, input, world objects, or presentation assets.
+Make the three starter resources readable during play so later gathering input can provide visible progress feedback, without introducing action controls or moving resource ownership into UI code.
 
 ## Exact scope
 
-- Add a typed runtime-only executor initialized with a valid `GatheringActionCatalog` and `ResourceLedger`.
-- Expose one callable operation that accepts a semantic gathering action ID, resolves its immutable definition, and credits exactly that definition's resource ID and reward amount to the ledger.
-- Reject unknown/empty action IDs and missing dependencies deterministically without mutating any ledger balance.
-- Ensure one successful call produces exactly one ledger credit and does not mutate the action catalog or unrelated resource balances.
-- Return a small typed/semantic result or deterministic status suitable for later UI/input adapters without exposing presentation metadata as a mechanical dependency.
-- Add a focused headless smoke covering every starter action, repeated execution, exact deltas, unrelated-balance isolation, invalid calls, missing dependencies, catalog immutability, and presentation-metadata substitution.
+- Add one reusable editor-visible resource HUD scene composed of a panel/container and reusable resource rows.
+- Add a small typed presenter/controller that receives a valid `ResourceCatalog` and `ResourceLedger`, creates exactly one row per catalog definition in catalog order, and refreshes each row's integer balance.
+- Use catalog display metadata only for presentation text and semantic icon/style slots; use semantic resource IDs only to query balances and identify rows.
+- Expose a narrow callable setup/refresh API suitable for later main-scene or gathering adapters.
+- Keep layout/style values centralized in the HUD scene, theme resource, or exported semantic style properties rather than scattering them through gameplay scripts.
+- Add a focused headless smoke that instantiates the HUD, injects catalog and ledger dependencies, verifies order and displayed balances before and after ledger credits, verifies invalid dependencies fail without mutating the ledger, and proves presentation substitution does not alter semantic row identity or balance behavior.
 
 ## Non-goals
 
-- Buttons, labels, HUD/resource counters, tap/click input, world-object interaction, signals/event buses, animations, audio, feedback copy, cooldowns, timers, passive production, random rewards, costs, inventory capacity, buildings, pigeons, jobs, objectives, upgrades, or economy changes.
-- Changes to starter action IDs, resource targets, reward amounts, resource membership, or catalog order.
-- Autoloads, scene/startup integration, persistence, save files, schema versions, migrations, autosave, or offline gains.
-- Multi-resource rewards, loot tables, final art, Android/browser/export work, monetization, combat, multiplayer, or unrelated refactors.
+- Gathering buttons, tap/click input, world-object actions, executor wiring, automatic ledger signals, event buses, animations, audio, feedback copy, timers, passive production, costs, storage, buildings, pigeons, jobs, objectives, upgrades, or economy changes.
+- Changes to resource IDs, membership, order, gathering actions, rewards, or balance authority.
+- Autoloads, save files, persistence, schema versions, migrations, autosave, offline gains, or startup/main-scene integration.
+- Final art, bespoke icons, Android/browser/export work, monetization, combat, multiplayer, or unrelated refactors.
 
 ## Likely affected systems/files
 
-- `scripts/resources/gathering_action_executor.gd` (new typed runtime execution boundary)
-- `tests/phase02_gathering_action_executor_smoke.gd` (new focused smoke)
+- `scenes/ui/resource_hud.tscn` (new editor-visible reusable HUD)
+- `scenes/ui/resource_row.tscn` (new editor-visible reusable row, if separation remains useful)
+- `scripts/ui/resource_hud.gd` (new presentation adapter/controller)
+- `scripts/ui/resource_row.gd` (optional narrow row binding helper)
+- `tests/phase02_resource_hud_smoke.gd` (new focused smoke)
 
-Narrow compatibility changes to the existing catalog or ledger are permitted only if required to support typed read-only execution or deterministic failure reporting. Do not change authoritative data, balances, scenes, autoloads, or startup behavior.
+Narrow read-only helpers on the catalog or ledger are permitted only if required for deterministic presentation binding. Do not change authoritative data, balances, gathering execution, world scenes, startup behavior, or persistence.
 
 ## Acceptance criteria
 
 1. Headless import and startup succeed, with startup printing exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-2. A valid executor uses only the supplied `GatheringActionCatalog` and `ResourceLedger`; it does not load JSON, scenes, textures, or presentation resources itself.
-3. Executing `gather_crumbs`, `gather_twigs`, or `gather_shinies` credits exactly the resource and positive integer reward declared by that action definition.
-4. Each successful call applies exactly one credit; repeated calls accumulate deterministically by the declared reward amount.
-5. Executing one action leaves every unrelated resource balance unchanged.
-6. Empty and unknown action IDs fail deterministically, report a stable semantic failure status, and leave the complete ledger snapshot unchanged.
-7. Missing/null catalog or ledger dependencies cannot produce a successful execution and cannot mutate external state.
-8. Execution does not mutate catalog membership, source order, definitions, action IDs, targets, or rewards.
-9. Mechanics depend only on semantic action ID, semantic resource ID, and reward amount. Display name, description, icon/style slots, textures, colors, fonts, copy, layout, animation, audio, image dimensions, and node names are not used to resolve or award an action.
-10. Replacing every presentation metadata field in an equivalent valid action catalog leaves execution results and ledger deltas unchanged.
-11. No UI, input, scene, world, autoload, save/schema, persistent state, timer, production, or new resource/currency is introduced or changed.
-12. The focused smoke prints exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS` and exits 0.
-13. Headless import/startup, baseline smoke, all four Phase 1 smokes, all three existing Phase 2 smokes, the new focused smoke, and `git diff --check` pass.
+2. The HUD is an editor-visible reusable scene and receives supplied catalog/ledger dependencies; it does not own balances or load gathering definitions.
+3. Successful setup creates exactly three rows in authoritative catalog order: `crumbs`, `twigs`, `shinies`.
+4. Each row retains a stable semantic resource ID independent of its node name, label text, icon, color, dimensions, or sibling styling.
+5. Initial displayed balances are integer zeroes matching the ledger; after direct ledger credits and one explicit refresh, only the corresponding displayed balances change to the exact ledger values.
+6. Refresh is read-only: it never credits, debits, reorders, adds, or removes ledger resources and never mutates catalog definitions.
+7. Null/invalid dependencies fail deterministically, do not crash, and leave any supplied ledger snapshot unchanged.
+8. Display names come from catalog presentation metadata; no gameplay/balance script hardcodes player-facing resource names or balance values.
+9. Layout, typography, panel/row styling, and semantic icon/style resolution remain presentation concerns centralized in scenes/theme tokens/exported style properties, not in the ledger, catalog, or gathering executor.
+10. Replacing every resource display metadata field in an equivalent valid catalog may change rendered presentation text/slots but leaves semantic row IDs, row order, ledger snapshots, and displayed numeric balances unchanged.
+11. Mechanically meaningful identity is not conveyed solely by color or placeholder imagery: every row includes readable text plus its numeric amount.
+12. No final image is introduced. Missing semantic icon assets use a documented text/shape fallback without changing gameplay code.
+13. No input, gathering execution, world/main scene, autoload, save/schema, timer, production, or new resource/currency is introduced or changed.
+14. The focused smoke prints exactly one `PHASE02_RESOURCE_HUD_SMOKE PASS` and exits 0.
+15. Headless import/startup, baseline smoke, all four Phase 1 smokes, all four existing Phase 2 smokes, the new focused smoke, and `git diff --check` pass.
 
 ## Focused validation commands
 
@@ -64,24 +69,26 @@ Narrow compatibility changes to the existing catalog or ledger are permitted onl
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_ledger_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_catalog_smoke.gd
 /home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd
+/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_hud_smoke.gd
 git diff --check
 ```
 
 ## Save/schema impact
 
-None. The executor and ledger balances remain runtime-only. Stable semantic action/resource IDs are used, but this slice introduces no save contract, persisted balance, schema version, or migration.
+None. The HUD mirrors runtime-only balances and stores no authoritative or persistent state. Stable semantic resource IDs remain the binding key, but no save contract, schema version, or migration is introduced.
 
 ## Risks and rollback boundary
 
-- Bypassing the catalog and hardcoding reward values would create duplicated balance authority; execution must read target and amount only from the resolved immutable definition.
-- A failure path that credits before validation could partially mutate the ledger; resolve and validate dependencies/action before performing the single credit.
-- Returning presentation-heavy results could couple later adapters to placeholder copy/assets; expose semantic status and IDs only.
-- Broad ledger/catalog changes could destabilize already verified contracts; prefer a new narrow executor and retain existing APIs.
-- Rollback boundary: the new executor script, focused smoke, and any narrowly justified compatibility lines. Reverting them restores the verified catalog-plus-ledger state with no migration or scene changes.
+- Letting labels own or calculate balances would duplicate ledger authority; every numeric refresh must query the supplied ledger.
+- Rebuilding rows by node name, color, or icon would couple mechanics to a skin; row identity must be the semantic resource ID.
+- Embedding fixed colors, fonts, dimensions, or final-looking icon paths in controller code would poison later reskinning; keep them in editor-visible scenes/theme/style slots.
+- Automatic signals or main-scene wiring would broaden this slice and create lifecycle ambiguity; use explicit setup/refresh only.
+- Rollback boundary: the new HUD/row scenes, their narrow UI scripts, focused smoke, and any strictly necessary read-only compatibility lines. Reverting them restores the verified runtime resource foundation without migration or scene changes.
 
 ## Reskin boundary and placeholder-asset impact
 
-- Action ID, resource ID, and reward amount are the complete mechanical execution contract. All display metadata and visual/audio styling remain replaceable presentation concerns.
-- No image, font, audio, theme, scene, or other presentation asset is added, loaded, or changed; all existing image files remain temporary placeholders.
-- The executor must not inspect icon/style slots or infer mechanics from texture appearance, color, copy, dimensions, layout, animation, audio, or node names.
-- The focused smoke must rebuild an equivalent catalog with every presentation field replaced, execute the same action sequence, and prove identical semantic results and ledger deltas. This verifies decoupling only, not subjective visual quality.
+- The mechanical boundary remains `ResourceCatalog` semantic IDs/order plus `ResourceLedger` integer balances. The HUD is a replaceable presentation adapter and must not become a source of gameplay state.
+- Display name, description, icon slot, style slot, font, color, spacing, panel treatment, row dimensions, animation, and audio are replaceable presentation details.
+- All existing images remain temporary placeholders. This slice should add no final image; unresolved icon slots must fall back to readable text and/or a neutral editor-visible shape.
+- The focused smoke must substitute all resource presentation metadata, confirm presentation can change, and prove semantic row IDs/order and balance refresh results remain identical. This is a reskin-decoupling check, not subjective GUI approval.
+- Manual GUI QA remains required later for mobile readability, overlap, spacing, and visual hierarchy; headless tests must not claim those qualities.

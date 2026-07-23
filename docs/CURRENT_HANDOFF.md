@@ -1,16 +1,10 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Planning base commit: `f4742b42dbdbe7bc306e59731d634973e127d397`
-Builder base commit: `ee565ab8099cd6e10c7be4aba252069909f3ff4c`
-Objective: Add a runtime-only gathering action executor that resolves a semantic action ID through the verified gathering catalog and atomically credits its declared reward to the verified resource ledger.
-
-Built implementation:
-- `scripts/resources/gathering_action_executor.gd` owns the runtime-only typed execution boundary. It receives its catalog and ledger dependencies, resolves one semantic action ID, applies one ledger credit, and returns an `ExecutionResult` containing semantic status, action ID, resource ID, and reward amount only.
-- Stable rejection statuses cover missing catalog, missing ledger, empty action ID, unknown action ID, and ledger-credit rejection; all validation occurs before the sole possible credit call.
-- `tests/phase02_gathering_action_executor_smoke.gd` verifies all starter actions, repeated exact accumulation, unrelated-balance isolation, complete failure snapshots, missing dependencies, catalog immutability, and equivalent execution after every presentation metadata field is substituted.
+Planning base commit: `fcbfbb8c18a8af26fcffde85bd78941906b54f14`
+Objective: Add an editor-visible, read-only resource HUD panel that renders the verified resource catalog in authoritative order and refreshes displayed balances from the verified runtime ledger through a narrow presentation adapter.
 
 Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . --import`
@@ -23,15 +17,17 @@ Required validations:
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_catalog_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_ledger_smoke.gd`
 - `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_catalog_smoke.gd`
-- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd` with exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_gathering_action_executor_smoke.gd`
+- `/home/ubuntu/.local/bin/godot4 --headless --path . -s res://tests/phase02_resource_hud_smoke.gd` with exactly one `PHASE02_RESOURCE_HUD_SMOKE PASS`
 - `git diff --check`
 
-Builder validation: All commands above passed with Godot 4.6.2. Startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`; the focused smoke printed exactly one `PHASE02_GATHERING_ACTION_EXECUTOR_SMOKE PASS`; `git diff --check` passed.
+Known blocker status: None. Entry tree was clean at `fcbfbb8`; local `main`, local `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to that verified commit. The existing resource catalog, runtime ledger, gathering catalog, and gathering executor are verified.
 
-QA verification: Builder commit `dd199c9260f03374334f5ff3c8c9c2764cd3e903` was reviewed against all acceptance criteria and non-goals. QA independently passed headless import/startup, baseline, all four Phase 1 smokes, all four Phase 2 smokes, exact marker counts, presentation-metadata substitution, parser/error-log checks, and `git diff --check`. No integration fix was required.
+Build boundary:
+- Build only the reusable editor-visible resource HUD/row presentation adapter and focused smoke described in `docs/ACTIVE_PHASE.md`.
+- Do not wire it into `scenes/main.tscn`, add gathering controls, introduce signals/autoloads/persistence, change balances/data, or implement another roadmap objective.
+- Keep semantic IDs and ledger balances as the mechanical contract. Keep copy, icon/style slots, fonts, colors, spacing, layout, animation, audio, and placeholder appearance replaceable.
 
-Known blocker status: None. Builder entry tree was clean at `ee565ab8`; that planning commit was based on validated `main`/`origin/main` commit `f4742b4`. No authoritative data, balances, scenes, startup behavior, or presentation assets changed.
+Save/schema impact: None. Runtime-only read presentation; no persisted state, schema version, migration, or autosave.
 
-Verified scope: The runtime gathering executor slice is approved for integration. No UI/input/world integration, timers, production, persistence, autoloads, scenes, or balance changes were introduced.
-
-Reskin boundary: The executor may depend only on semantic action ID, semantic resource ID, and reward amount. It must not read display metadata or presentation assets. The focused smoke must substitute all presentation metadata and prove identical execution results and ledger deltas.
+Reskin boundary: All image files are temporary placeholders. The HUD must retain semantic row identity independent of labels, node names, icon appearance, colors, dimensions, and theme. Missing icons require a readable text/shape fallback, and presentation-metadata substitution must leave ordering and balance refresh mechanics unchanged.
