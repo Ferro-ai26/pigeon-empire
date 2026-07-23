@@ -39,5 +39,8 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all three Phase 2 smokes, exact marker-count checks, metadata substitution, and `git diff --check` for the gathering-action catalog slice.
 - [x] Builder focused gathering-action executor smoke passes all starter actions, exact isolated credits, repeated accumulation, invalid and missing-dependency rejection without mutation, catalog immutability, semantic results, and full presentation-metadata substitution.
 - [x] QA reran headless import/startup, baseline, all four Phase 1 smokes, all four Phase 2 smokes, exact marker-count checks, presentation-metadata substitution, parser/error-log checks, and `git diff --check` for the gathering-action executor slice.
+- [x] Builder focused resource-HUD smoke passes editor-visible scene instantiation, authoritative row order, explicit read-only balance refresh, invalid-dependency rejection without ledger or valid-row mutation, and full presentation-metadata substitution.
+- [ ] In the Godot GUI, the temporary HUD fallback marker, display names, and integer balances remain readable without overlap at the intended mobile viewport.
+- [ ] QA reruns headless import/startup, baseline, all Phase 1 smokes, all five Phase 2 smokes, exact marker-count checks, metadata substitution, parser/error-log checks, and `git diff --check` for the resource-HUD slice.
 
-This slice has no player-facing behavior or subjective visual acceptance item.
+The resource HUD now has player-facing presentation structure, but its subjective readability and spacing remain manual GUI QA items; headless validation does not claim them.

@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/resource_hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/resource_row.tscn" id="2_row"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.12, 0.13, 0.16, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.43, 0.48, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Theme" id="Theme_hud"]
+default_font_size = 18
+PanelContainer/styles/panel = SubResource("StyleBox_panel")
+
+[node name="ResourceHud" type="PanelContainer"]
+custom_minimum_size = Vector2(280, 0)
+theme = SubResource("Theme_hud")
+script = ExtResource("1_hud")
+row_scene = ExtResource("2_row")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="Rows" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8

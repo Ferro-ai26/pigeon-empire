@@ -10,6 +10,8 @@ No known parser, reward-contract, resource-target validation, ordering, lookup, 
 
 No known dependency-validation, action-resolution, exact-credit, balance-isolation, repeated-execution, result-status, catalog-mutation, or presentation-metadata-coupling issue in the built Phase 2 gathering-action executor slice. The executor is runtime-only; GUI and export behavior were not involved or claimed.
 
+No known parser, dependency-validation, catalog-order, explicit-refresh, balance-isolation, invalid-setup, or presentation-metadata-coupling issue in the built Phase 2 resource-HUD slice. Subjective GUI readability, spacing, and mobile hierarchy remain unverified; no export behavior is claimed.
+
 QA verified the visual-layering slice at builder commit `85f1d9f` with no integration fix required.
 
 QA verified the world-object-selection slice at builder commit `4f2fd6d` with no integration fix required.
