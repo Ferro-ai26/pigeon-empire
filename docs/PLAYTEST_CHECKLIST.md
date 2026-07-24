@@ -42,5 +42,8 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [x] Builder focused resource-HUD smoke passes editor-visible scene instantiation, authoritative row order, explicit read-only balance refresh, invalid-dependency rejection without ledger or valid-row mutation, and full presentation-metadata substitution.
 - [ ] In the Godot GUI, the temporary HUD fallback marker, display names, and integer balances remain readable without overlap at the intended mobile viewport.
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all five Phase 2 smokes, exact marker-count checks, metadata substitution, parser/error-log checks, and `git diff --check` for the resource-HUD slice.
+- [x] Builder focused playable gathering-loop smoke passes preserved main-scene world composition, catalog-ordered semantic controls, all three actions, exact isolated and repeated credits, explicit read-only HUD refresh, invalid request/setup safety, and complete resource/action presentation-metadata substitution.
+- [ ] In the Godot GUI, each gathering control has a comfortable mobile tap target, readable text, and no overlap with the resource HUD or rooftop/camera view.
+- [ ] Clicking each gathering control once visibly increments only its matching resource counter; repeated clicks feel responsive and never double-credit.
 
-The resource HUD now has player-facing presentation structure, but its subjective readability and spacing remain manual GUI QA items; headless validation does not claim them.
+The resource HUD and starter gathering panel now form a playable resource loop, but subjective readability, spacing, tap feel, hierarchy, and camera/UI coexistence remain manual GUI QA items; headless validation does not claim them.

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource path="res://scripts/main.gd" type="Script" id="1"]
 [ext_resource path="res://scenes/world/rooftop_grid.tscn" type="PackedScene" id="2_grid"]
 [ext_resource path="res://scripts/world/rooftop_camera.gd" type="Script" id="3_camera"]
 [ext_resource path="res://scenes/world/rooftop_world_object.tscn" type="PackedScene" id="4_object"]
 [ext_resource path="res://scripts/world/rooftop_world_selection.gd" type="Script" id="5_selection"]
+[ext_resource path="res://scenes/ui/resource_hud.tscn" type="PackedScene" id="6_hud"]
+[ext_resource path="res://scenes/ui/gathering_panel.tscn" type="PackedScene" id="7_gathering"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1")
@@ -32,3 +34,20 @@ grid_cell = Vector2i(3, 2)
 [node name="RooftopCamera" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 script = ExtResource("3_camera")
+
+[node name="RuntimeUi" type="CanvasLayer" parent="."]
+
+[node name="Interface" type="HBoxContainer" parent="RuntimeUi"]
+offset_left = 32.0
+offset_top = 88.0
+offset_right = 608.0
+offset_bottom = 320.0
+theme_override_constants/separation = 16
+
+[node name="ResourceHud" parent="RuntimeUi/Interface" instance=ExtResource("6_hud")]
+layout_mode = 2
+
+[node name="GatheringPanel" parent="RuntimeUi/Interface" instance=ExtResource("7_gathering")]
+layout_mode = 2
+
+[connection signal="action_requested" from="RuntimeUi/Interface/GatheringPanel" to="." method="_on_gathering_panel_action_requested"]
