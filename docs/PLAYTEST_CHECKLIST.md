@@ -41,6 +41,6 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [x] QA reran headless import/startup, baseline, all four Phase 1 smokes, all four Phase 2 smokes, exact marker-count checks, presentation-metadata substitution, parser/error-log checks, and `git diff --check` for the gathering-action executor slice.
 - [x] Builder focused resource-HUD smoke passes editor-visible scene instantiation, authoritative row order, explicit read-only balance refresh, invalid-dependency rejection without ledger or valid-row mutation, and full presentation-metadata substitution.
 - [ ] In the Godot GUI, the temporary HUD fallback marker, display names, and integer balances remain readable without overlap at the intended mobile viewport.
-- [ ] QA reruns headless import/startup, baseline, all Phase 1 smokes, all five Phase 2 smokes, exact marker-count checks, metadata substitution, parser/error-log checks, and `git diff --check` for the resource-HUD slice.
+- [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all five Phase 2 smokes, exact marker-count checks, metadata substitution, parser/error-log checks, and `git diff --check` for the resource-HUD slice.
 
 The resource HUD now has player-facing presentation structure, but its subjective readability and spacing remain manual GUI QA items; headless validation does not claim them.

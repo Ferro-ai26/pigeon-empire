@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `fcbfbb8c18a8af26fcffde85bd78941906b54f14`
@@ -30,6 +30,11 @@ QA boundary:
 - Do not claim subjective readability, spacing, mobile hierarchy, or GUI behavior from headless tests.
 
 Known blocker status: None.
+
+QA verification:
+- QA reviewed builder commit `28dc399a8fa4ceeccdd28dd106fc86089f52e7be`; no integration fix was required.
+- Godot 4.6.2 headless import/startup, baseline smoke, all four Phase 1 smokes, all five Phase 2 smokes, exact success-marker counts, clean parser/error scan, presentation-metadata substitution, and `git diff --check` passed.
+- Subjective HUD readability, spacing, and mobile hierarchy remain manual GUI checks and were not claimed by headless QA.
 
 Build boundary retained:
 - The HUD is not wired into `scenes/main.tscn` and introduces no input, signals, gathering execution, persistence, economy changes, or final art.

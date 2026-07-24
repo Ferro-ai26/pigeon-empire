@@ -91,3 +91,15 @@
 - Reskin check passed: the focused smoke replaces every action presentation metadata field in an equivalent catalog and proves identical semantic mechanics and ledger deltas. The executor reads only semantic action ID, semantic resource ID, and reward amount; it loads no presentation resource.
 - Persistence/save tests: not applicable; the executor and ledger remain runtime-only and the builder diff contains no save, schema, autoload, scene, or startup integration change.
 - Manual GUI status: not applicable to this runtime-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 2 — Resource HUD
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `28dc399a8fa4ceeccdd28dd106fc86089f52e7be`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, headless startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all five Phase 2 smokes, resource-HUD smoke (exactly one `PHASE02_RESOURCE_HUD_SMOKE PASS`), zero parser/error-log matches, and `git diff --check`.
+- HUD checks passed: editor-visible reusable scenes, authoritative three-row order, stable semantic row identity, exact read-only explicit balance refresh, and deterministic invalid-dependency rejection preserving the ledger and last valid rows.
+- Reskin check passed: the focused smoke substitutes every resource display metadata field and proves semantic IDs, order, ledger snapshots, and numeric balances remain unchanged. Missing icons use a text/shape fallback, and gameplay code has no texture, color, font, layout, copy, placeholder-dimension, animation, audio, or final-theme dependency.
+- Persistence/save tests: not applicable; this is runtime-only read presentation with no save, schema, autoload, or startup integration change.
+- Manual GUI status: not tested. Subjective readability, spacing, overlap, and mobile hierarchy remain unchecked; no GUI, browser/export, or visual-quality success is claimed.
