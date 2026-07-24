@@ -1,43 +1,38 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Planning base commit: `fcbfbb8c18a8af26fcffde85bd78941906b54f14`
-Objective completed: Added an editor-visible, read-only resource HUD that renders supplied catalog definitions in authoritative order and explicitly refreshes balances from a supplied runtime ledger.
+Planning base commit: `170798e46cf39481982fb6b44c9cb20f6a52208e`
+Objective: Compose the verified Phase 2 resource systems into the smallest playable click-to-gather loop: an editor-visible gathering panel in `scenes/main.tscn`, one runtime ledger/executor coordinator, and explicit resource-HUD refresh after each accepted semantic action request.
 
-Built ownership:
-- `scenes/ui/resource_hud.tscn` centralizes the HUD panel theme, margins, spacing, and reusable row scene reference.
-- `scenes/ui/resource_row.tscn` owns the readable text/number row and neutral text/shape icon fallback.
-- `scripts/ui/resource_hud.gd` validates injected catalog/ledger dependencies, builds semantic rows, and performs read-only explicit refreshes.
-- `scripts/ui/resource_row.gd` binds replaceable display metadata while retaining semantic resource identity independently.
-- `tests/phase02_resource_hud_smoke.gd` verifies ordering, balances, rejection safety, catalog immutability, and full presentation-metadata substitution.
+Approved scope:
+- Add reusable editor-visible gathering controls generated in authoritative action-catalog order.
+- Bind presentation metadata separately from stable semantic action IDs.
+- Add narrow runtime composition for resource/action catalogs, one ledger, one executor, the gathering panel, and the existing HUD.
+- Execute exactly one catalog action per accepted request, then explicitly refresh the read-only HUD.
+- Add `tests/phase02_playable_gathering_loop_smoke.gd` covering setup, all actions, exact accumulation, rejection safety, and reskin substitution.
 
-Builder validation passed:
-- Godot 4.6.2 headless import.
-- Headless startup with exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-- Baseline smoke.
-- All four Phase 1 smokes.
-- All four pre-existing Phase 2 smokes.
-- Focused resource HUD smoke with exactly one `PHASE02_RESOURCE_HUD_SMOKE PASS`.
-- `git diff --check`.
+Required validations:
+- Run every command in `docs/ACTIVE_PHASE.md` with `/home/ubuntu/.local/bin/godot4`.
+- Confirm exactly one startup/baseline/focused success marker per command as applicable.
+- Scan combined Godot output for parser/script errors and unexpected `ERROR:` lines.
+- Verify one action request produces exactly one catalog-defined ledger credit and refreshes only the declared HUD balance.
+- Verify invalid setup/action requests preserve the complete ledger snapshot and last valid UI state.
+- Verify complete resource/action presentation-metadata substitution leaves semantic IDs/order, rewards, balances, and HUD numbers unchanged.
+- Run `git diff --check`.
 
-QA boundary:
-- Re-run every command in `docs/ACTIVE_PHASE.md` against the builder commit.
-- Confirm parser/error output remains clean and exact success-marker counts are one.
-- Verify rejected null/mismatched dependencies preserve both the ledger snapshot and the last valid HUD rows.
-- Verify substituted display names/icon slots/style slots change presentation metadata while semantic IDs, order, and numeric balances remain stable.
-- Do not claim subjective readability, spacing, mobile hierarchy, or GUI behavior from headless tests.
+Known blocker status: None. Repository was clean at planning entry. Local `main`, local `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to planning base `170798e46cf39481982fb6b44c9cb20f6a52208e` before this planning commit.
 
-Known blocker status: None.
+Save/schema impact: None. Runtime-only composition; no persistence, schema version, migration, autosave, or offline gains.
 
-QA verification:
-- QA reviewed builder commit `28dc399a8fa4ceeccdd28dd106fc86089f52e7be`; no integration fix was required.
-- Godot 4.6.2 headless import/startup, baseline smoke, all four Phase 1 smokes, all five Phase 2 smokes, exact success-marker counts, clean parser/error scan, presentation-metadata substitution, and `git diff --check` passed.
-- Subjective HUD readability, spacing, and mobile hierarchy remain manual GUI checks and were not claimed by headless QA.
+Reskin boundary:
+- Mechanics depend only on semantic IDs, catalog order/reward values, executor results, and ledger balances.
+- Copy, icons, style slots, fonts, colors, spacing, layout, controls, animation, audio, and every image remain replaceable presentation concerns.
+- No final image is permitted; missing icons require readable text/non-color fallback.
+- Headless substitution proves decoupling only. Mobile readability, tap targets, overlap, hierarchy, and click feel remain manual GUI QA.
 
-Build boundary retained:
-- The HUD is not wired into `scenes/main.tscn` and introduces no input, signals, gathering execution, persistence, economy changes, or final art.
-- Semantic IDs and ledger balances remain the mechanical contract. Copy, icon/style slots, fonts, colors, spacing, layout, animation, audio, and placeholder appearance remain replaceable presentation concerns.
-
-Save/schema impact: None. Runtime-only read presentation; no persisted state, schema version, migration, or autosave.
+Build boundary:
+- Complete only the approved Phase 2 playable gathering-loop slice.
+- Do not add Phase 3 buildings/storage, persistence, timers, passive production, world-object rewards, exports, or unrelated systems.
+- Preserve the rooftop world, camera, current headless startup behavior, and all verified catalog/ledger/executor/HUD authority boundaries.
