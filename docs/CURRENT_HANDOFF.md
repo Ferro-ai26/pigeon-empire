@@ -1,32 +1,28 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Builder base commit: `b563863faa7f93d0c91c0c679dad4b4c8fa551b2`
-Objective completed: Composed the verified Phase 2 resource systems into the smallest playable click-to-gather loop with an editor-visible gathering panel, one session ledger/executor coordinator, and explicit read-only HUD refresh after accepted actions.
+Planning base commit: `3019d9d4d200ba28e5f1a17d06c56451d82fb477`
+Current roadmap phase: Phase 3 — Building System
+Objective: Add an immutable JSON-backed catalog for the single `basic_nest` definition, with semantic footprint, construction costs, storage contributions, and replaceable presentation slots; do not implement placement, construction, spending, runtime storage, or UI.
 
-Implemented:
-- `scenes/main.tscn` preserves the rooftop grid, world objects, and camera while composing `ResourceHud` and `GatheringPanel` under an editor-visible `CanvasLayer` interface.
-- `scripts/main.gd` (`MainRuntime`) loads both authoritative catalogs, creates exactly one runtime ledger and executor per successful setup, executes one semantic action per accepted request, and explicitly refreshes the HUD.
-- `scenes/ui/gathering_panel.tscn` and `scripts/ui/gathering_panel.gd` publish exactly one control per action definition in catalog order without owning rewards or balances.
-- `scenes/ui/gathering_action_button.tscn` and its script bind stable action IDs separately from catalog-driven display name, description, icon slot, and style slot.
-- `tests/phase02_playable_gathering_loop_smoke.gd` verifies all starter actions, exact isolated/repeated credits, deterministic order, invalid request/setup safety, HUD synchronization, preserved world composition, and complete action/resource presentation-metadata substitution.
+Verified entry state:
+- Repository was clean at run entry.
+- `main`, `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to `3019d9d` before this planning commit.
+- Phase 2 Playable Gathering Loop is recorded VERIFIED in `docs/QA_REPORT.md` and its documented scene, scripts, data, and focused smoke exist in the repository.
+- Phase 3 roadmap scope is placement preview/validation, construction costs, Basic Nest, storage, and building selection. This slice establishes only the immutable Basic Nest definition boundary required by those later runtime slices.
 
-Validation evidence:
-- Headless import and startup passed; startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-- Baseline smoke, all four Phase 1 smokes, all five prior Phase 2 smokes, and `PHASE02_PLAYABLE_GATHERING_LOOP_SMOKE PASS` each passed with exactly one expected marker.
-- Combined output scans found no `SCRIPT ERROR`, `Parse Error`, or unexpected `ERROR:` lines.
-- `git diff --check` passed.
+Required implementation:
+- Follow the exact scope, non-goals, acceptance criteria, rollback boundary, and reskin boundary in `docs/ACTIVE_PHASE.md`.
+- Add only the authoritative building JSON, typed immutable definition/catalog scripts, and one focused building-catalog smoke, except for a strictly necessary narrow read-only resource-catalog compatibility helper.
+- Preserve all verified Phase 1 and Phase 2 behavior and authority boundaries.
 
-Save/schema impact: None. Runtime-only session composition; no persistence, migration, autosave, or offline gains.
+Required validations:
+- Run every command listed in `docs/ACTIVE_PHASE.md`.
+- Require clean exits, exact expected markers, no `SCRIPT ERROR`, no `Parse Error`, no unexpected `ERROR:` output, and a passing `git diff --check`.
+- The focused smoke must prove complete-candidate atomic publication, immutable copied collections, strict numeric/resource-reference validation, exact authoritative Basic Nest mechanics, and full presentation-metadata substitution without mechanical change.
 
-Reskin boundary:
-- Mechanics depend only on semantic IDs, catalog order/reward values, executor results, and ledger balances.
-- Copy, semantic slots, themes, layout, controls, animation, audio, and images remain replaceable presentation concerns.
-- The focused smoke substituted every resource and gathering-action presentation metadata field and preserved IDs, order, exact rewards, snapshots, and HUD balances.
-- No image was added. Buttons retain readable text when no icon resolves.
+Save/schema impact: None. Immutable definition data only; no persistence or runtime building/storage state.
 
-QA boundary:
-- QA verified builder commit `5178e43850ab3f0aec8cafdafe1da907047df054` with no integration fix required. All focused and baseline commands passed with exact marker counts and clean error scanning.
-- Manual GUI QA remains required for mobile tap targets, overlap, readability, hierarchy, camera/UI coexistence, and click feel. Headless validation does not claim those qualities.
+Known blocker status: None. Manual GUI QA is not applicable to this data-only slice, and no visual-quality claim should be made.
