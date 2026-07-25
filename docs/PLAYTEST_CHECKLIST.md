@@ -43,6 +43,7 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [ ] In the Godot GUI, the temporary HUD fallback marker, display names, and integer balances remain readable without overlap at the intended mobile viewport.
 - [x] QA reran headless import/startup, baseline, all Phase 1 smokes, all five Phase 2 smokes, exact marker-count checks, metadata substitution, parser/error-log checks, and `git diff --check` for the resource-HUD slice.
 - [x] Builder focused playable gathering-loop smoke passes preserved main-scene world composition, catalog-ordered semantic controls, all three actions, exact isolated and repeated credits, explicit read-only HUD refresh, invalid request/setup safety, and complete resource/action presentation-metadata substitution.
+- [x] QA reran headless import/startup, baseline, all four Phase 1 smokes, all six Phase 2 smokes, exact marker-count checks, complete presentation-metadata substitution, parser/error-log scanning, and `git diff --check` for the playable gathering-loop slice.
 - [ ] In the Godot GUI, each gathering control has a comfortable mobile tap target, readable text, and no overlap with the resource HUD or rooftop/camera view.
 - [ ] Clicking each gathering control once visibly increments only its matching resource counter; repeated clicks feel responsive and never double-credit.
 

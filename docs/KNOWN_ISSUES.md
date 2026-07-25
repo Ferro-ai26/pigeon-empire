@@ -28,4 +28,6 @@ QA verified the Phase 2 gathering-action executor slice at builder commit `dd199
 
 QA verified the Phase 2 resource-HUD slice at builder commit `28dc399` with no integration fix required. Subjective HUD readability, spacing, and mobile hierarchy remain unverified in the headless QA environment.
 
+QA verified the Phase 2 playable gathering-loop slice at builder commit `5178e43` with no integration fix required. Mobile tap targets, UI/world overlap, readability, hierarchy, camera coexistence, and click feel remain unverified in the headless QA environment.
+
 Manual GUI world-object pointer feel, selection-marker readability, pointer-drag and wheel feel, camera framing, placeholder overlap/readability, and equal-depth sibling-order appearance remain unverified in the headless QA environment. Browser/export validation has not been claimed.
