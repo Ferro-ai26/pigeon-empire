@@ -1,28 +1,32 @@
 # Current Handoff
 
-State: READY_FOR_BUILD
+State: READY_FOR_QA
 
 Branch: `chucky-dev`
-Planning base commit: `3019d9d4d200ba28e5f1a17d06c56451d82fb477`
+Implementation base commit: `003bc8628306b049389af41c42e546a6526db607`
 Current roadmap phase: Phase 3 — Building System
-Objective: Add an immutable JSON-backed catalog for the single `basic_nest` definition, with semantic footprint, construction costs, storage contributions, and replaceable presentation slots; do not implement placement, construction, spending, runtime storage, or UI.
+Completed objective: Added the immutable JSON-backed `basic_nest` building-definition catalog with semantic footprint, construction costs, storage contributions, and replaceable presentation slots. No placement, construction execution, spending, runtime storage, or UI was introduced.
 
-Verified entry state:
-- Repository was clean at run entry.
-- `main`, `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to `3019d9d` before this planning commit.
-- Phase 2 Playable Gathering Loop is recorded VERIFIED in `docs/QA_REPORT.md` and its documented scene, scripts, data, and focused smoke exist in the repository.
-- Phase 3 roadmap scope is placement preview/validation, construction costs, Basic Nest, storage, and building selection. This slice establishes only the immutable Basic Nest definition boundary required by those later runtime slices.
+Implemented slice:
+- `data/buildings/building_definitions.json` is the authoritative one-entry catalog. `basic_nest` has a 2x2 semantic footprint, costs 25 crumbs and 10 twigs, and contributes storage of 50 crumbs, 25 twigs, and 0 shinies.
+- `scripts/buildings/building_definition.gd` owns the typed immutable value object and returns copied cost/storage dictionaries.
+- `scripts/buildings/building_catalog.gd` owns strict JSON validation, ResourceCatalog-backed resource-reference validation, deterministic source order, typed lookup, copied enumeration, and atomic publication after complete candidate validation.
+- `tests/phase03_building_catalog_smoke.gd` verifies exact authority, lookup/enumeration immutability, malformed and numeric rejection paths, preserved state after rejected reloads, resource dependency validation, and substitution of every presentation field without mechanical changes.
+- No image, scene, autoload, runtime building state, persistence/schema, or Phase 2 authority changed.
 
-Required implementation:
-- Follow the exact scope, non-goals, acceptance criteria, rollback boundary, and reskin boundary in `docs/ACTIVE_PHASE.md`.
-- Add only the authoritative building JSON, typed immutable definition/catalog scripts, and one focused building-catalog smoke, except for a strictly necessary narrow read-only resource-catalog compatibility helper.
-- Preserve all verified Phase 1 and Phase 2 behavior and authority boundaries.
+Validation completed on Godot `4.6.2.stable`:
+- Headless import passed with no parser/script/unexpected error output.
+- Headless startup passed and printed exactly one `PIGEON_EMPIRE_STARTUP_OK`.
+- Baseline smoke passed with exactly one historical `PIGEON_EMPIRE_SMOKE_OK`.
+- All four Phase 1 focused smokes passed with their exact markers.
+- All six Phase 2 focused smokes passed with their exact markers.
+- Phase 3 building catalog smoke passed with exactly one `PHASE03_BUILDING_CATALOG_SMOKE PASS`.
+- `git diff --check` passed.
 
-Required validations:
-- Run every command listed in `docs/ACTIVE_PHASE.md`.
-- Require clean exits, exact expected markers, no `SCRIPT ERROR`, no `Parse Error`, no unexpected `ERROR:` output, and a passing `git diff --check`.
-- The focused smoke must prove complete-candidate atomic publication, immutable copied collections, strict numeric/resource-reference validation, exact authoritative Basic Nest mechanics, and full presentation-metadata substitution without mechanical change.
+Save/schema impact: None. Immutable definition data only.
 
-Save/schema impact: None. Immutable definition data only; no persistence or runtime building/storage state.
+Known blocker status: None. Manual GUI QA is not applicable to this data-only slice; headless reskin substitution verifies decoupling only and is not a visual-quality claim.
 
-Known blocker status: None. Manual GUI QA is not applicable to this data-only slice, and no visual-quality claim should be made.
+QA next:
+- Review the coherent building-catalog slice and rerun the commands in `docs/ACTIVE_PHASE.md`.
+- Verify no scope beyond immutable definitions entered the commit.

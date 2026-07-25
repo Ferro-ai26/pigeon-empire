@@ -1,0 +1,21 @@
+[
+  {
+    "id": "basic_nest",
+    "footprint_width": 2,
+    "footprint_height": 2,
+    "construction_costs": {
+      "crumbs": 25,
+      "twigs": 10
+    },
+    "storage_contributions": {
+      "crumbs": 50,
+      "twigs": 25,
+      "shinies": 0
+    },
+    "display_name": "Basic Nest",
+    "description": "A starter nest that expands the colony's storage.",
+    "icon_slot": "building.basic_nest.icon",
+    "style_slot": "building.basic_nest.style",
+    "world_visual_slot": "building.basic_nest.world_visual"
+  }
+]
