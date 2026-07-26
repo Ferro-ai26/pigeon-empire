@@ -53,5 +53,7 @@ The resource HUD and starter gathering panel now form a playable resource loop, 
 
 - [x] Builder focused building-catalog smoke passes exact `basic_nest` authority/order and mechanics, resource-reference and strict numeric validation, malformed-data rejection, atomic failed reloads, typed lookup, copied collections, and complete presentation-metadata substitution.
 - [x] QA reran headless import/startup, baseline, all Phase 1 and Phase 2 smokes, the Phase 3 focused smoke, exact marker-count checks, parser/error scanning, reskin substitution, and `git diff --check`.
+- [x] Builder focused placement-validator smoke passes the authoritative Basic Nest 2x2 row-major footprint, all rooftop boundaries, overlap and duplicate occupancy handling, malformed input rejection, copied results, unchanged dependencies, and full presentation-metadata substitution.
+- [ ] QA independently reruns headless import/startup, baseline, all Phase 1 and Phase 2 smokes, both Phase 3 smokes, exact marker-count checks, parser/error scanning, reskin substitution, and `git diff --check` for the placement-validator slice.
 
-This slice is immutable data only; no GUI, placement, construction, storage runtime, persistence, or export behavior is introduced or claimed.
+The current addition is semantic placement validation only; no GUI preview, construction, storage runtime, persistence, or export behavior is introduced or claimed.
