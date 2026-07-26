@@ -48,3 +48,10 @@ Automated grid, camera, visual-layering, and world-object-selection acceptance i
 - [ ] Clicking each gathering control once visibly increments only its matching resource counter; repeated clicks feel responsive and never double-credit.
 
 The resource HUD and starter gathering panel now form a playable resource loop, but subjective readability, spacing, tap feel, hierarchy, and camera/UI coexistence remain manual GUI QA items; headless validation does not claim them.
+
+## Phase 3 — Building system
+
+- [x] Builder focused building-catalog smoke passes exact `basic_nest` authority/order and mechanics, resource-reference and strict numeric validation, malformed-data rejection, atomic failed reloads, typed lookup, copied collections, and complete presentation-metadata substitution.
+- [x] QA reran headless import/startup, baseline, all Phase 1 and Phase 2 smokes, the Phase 3 focused smoke, exact marker-count checks, parser/error scanning, reskin substitution, and `git diff --check`.
+
+This slice is immutable data only; no GUI, placement, construction, storage runtime, persistence, or export behavior is introduced or claimed.

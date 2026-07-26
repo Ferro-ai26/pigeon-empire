@@ -115,3 +115,15 @@
 - Reskin check passed: the focused smoke substitutes every resource and gathering-action presentation metadata field and proves semantic IDs, order, rewards, ledger snapshots, and HUD balances remain unchanged. Controls retain readable text with unresolved icon slots; mechanics do not depend on placeholder appearance.
 - Persistence/save tests: not applicable; session state is runtime-only and the builder diff contains no save, schema, migration, autoload, or offline-progress change.
 - Manual GUI status: not tested. Mobile tap targets, overlap, readability, hierarchy, camera/UI coexistence, and click feel remain unchecked; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 3 — Building Definition Catalog
+
+- Result: **VERIFIED**
+- Builder commits reviewed: `65916b8`, `a248fa0`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, building-catalog smoke (exactly one `PHASE03_BUILDING_CATALOG_SMOKE PASS`), zero parser/error-log matches, and `git diff --check`.
+- Catalog checks passed: exact `basic_nest` authority/order and mechanics, authoritative resource-ID validation, strict integral numeric validation, deterministic malformed-data rejection, atomic failed reloads, typed lookup, and copied collections.
+- Reskin check passed: the focused smoke substitutes all five presentation metadata fields while preserving semantic identity, order, footprint, costs, storage, lookup, and validation. No image or presentation resource was introduced or loaded by gameplay code.
+- Persistence/save tests: not applicable; this immutable definition-only slice contains no runtime building state, save, schema, migration, autoload, placement, debit, or storage-cap behavior.
+- Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.

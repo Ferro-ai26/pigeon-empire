@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Implementation base commit: `003bc8628306b049389af41c42e546a6526db607`
@@ -25,8 +25,8 @@ Validation completed on Godot `4.6.2.stable`:
 
 Save/schema impact: None. Immutable definition data only.
 
-Known blocker status: None. Manual GUI QA is not applicable to this data-only slice; headless reskin substitution verifies decoupling only and is not a visual-quality claim.
+Known blocker status: None. QA independently reran headless import/startup, baseline, all Phase 1 and Phase 2 smokes, and the Phase 3 focused smoke with exact markers and clean parser/error scans. Manual GUI QA is not applicable to this data-only slice; headless reskin substitution verifies decoupling only and is not a visual-quality claim.
 
-QA next:
-- Review the coherent building-catalog slice and rerun the commands in `docs/ACTIVE_PHASE.md`.
-- Verify no scope beyond immutable definitions entered the commit.
+QA result:
+- Builder commits `65916b8` and `a248fa0` verified with no integration fix required.
+- Promotion target: `main`; exact validated main commit is recorded after integration.
