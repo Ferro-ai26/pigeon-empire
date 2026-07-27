@@ -1,9 +1,10 @@
 # Current Handoff
 
-State: READY_FOR_BUILD
+State: READY_FOR_QA
 
 Branch: `chucky-dev`
 Planning base commit: `9e0728b49ca50733882452412323a105d1cf4f90`
+Builder base commit: `dd8fe4e3284dff6e1f2557b6b5239771f36d8e03`
 Current roadmap phase: Phase 3 — Building System
 Objective: Add an atomic multi-resource debit operation to `ResourceLedger`, verified against the authoritative Basic Nest construction-cost bundle, without creating construction, occupancy, UI, storage, or persistence behavior.
 
@@ -13,6 +14,8 @@ Repository evidence:
 - The building placement validator is already verified and remains unchanged by this slice.
 - Git entry state was clean; local `main`, local `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to `9e0728b` after fetch.
 - Godot `4.6.2.stable.official.71f334935` is available at `/home/ubuntu/.local/bin/godot4`.
+- `ResourceLedger.debit_bundle()` now returns stable semantic `StringName` statuses and validates complete caller-owned dictionaries before applying any debit.
+- `tests/phase03_construction_cost_transaction_smoke.gd` verifies exact Basic Nest payment, repeated affordability, malformed/unknown rejection, caller and ledger immutability, order-independent insufficient-balance rejection, unrelated-resource isolation, and complete presentation substitution.
 
 Required build outcome:
 - Validate every bundle entry and every required balance before any mutation.
@@ -30,6 +33,8 @@ Required validations:
 
 Save/schema impact: None. Runtime in-memory ledger API only; no persistence, migration, autoload, building record, or offline progress.
 
-Known blocker status: None. This plan intentionally stops before the later construction command because charging resources must eventually be coordinated with placement/occupancy rather than pretending a debit alone constructs a building.
+Builder validation: PASS on Godot `4.6.2`; headless import/startup, baseline, all Phase 1 smokes, all Phase 2 smokes, both prior Phase 3 smokes, the construction-cost transaction smoke, exact marker counts, parser/error scanning, and `git diff --check` passed.
+
+Known blocker status: None. QA should independently verify this runtime-only slice. It intentionally stops before the later construction command because charging resources must eventually be coordinated with placement/occupancy rather than pretending a debit alone constructs a building.
 
 See `docs/ACTIVE_PHASE.md` for exact scope, exclusions, acceptance criteria, validation commands, risks, rollback boundary, and reskin contract.
