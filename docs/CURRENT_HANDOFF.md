@@ -1,35 +1,35 @@
 # Current Handoff
 
-State: VERIFIED
+State: READY_FOR_BUILD
 
 Branch: `chucky-dev`
-Builder base commit: `63e3c69d7eafd8b4eaf78eff0afe62de419a0966`
+Planning base commit: `9e0728b49ca50733882452412323a105d1cf4f90`
 Current roadmap phase: Phase 3 — Building System
-Objective completed: Added a stateless, presentation-neutral placement validator for the authoritative Basic Nest 2x2 semantic footprint against injected grid bounds and occupied cells.
+Objective: Add an atomic multi-resource debit operation to `ResourceLedger`, verified against the authoritative Basic Nest construction-cost bundle, without creating construction, occupancy, UI, storage, or persistence behavior.
 
-Built slice:
-- `scripts/buildings/building_placement_result.gd` owns immutable typed semantic status, requested anchor, and copied footprint-cell results.
-- `scripts/buildings/building_placement_validator.gd` validates definitions, grid bounds, occupancy entries, boundary fit, and overlap without mutating dependencies.
-- Anchor means the footprint's top-left semantic cell; candidate cells are enumerated in deterministic row-major order.
-- Stable outcomes are `valid`, `invalid_definition`, `invalid_grid_bounds`, `out_of_bounds`, and `occupied_conflict`.
-- `tests/phase03_building_placement_validator_smoke.gd` covers the 2x2 authority, all boundaries, overlap and duplicates, malformed inputs, copied results, unchanged dependencies, and complete presentation-metadata substitution.
-- No preview UI, construction/debits, building instances, occupancy authority, persistence, main-scene changes, or assets were introduced.
+Repository evidence:
+- The verified `BuildingDefinition` already exposes a copied `construction_costs` dictionary; authoritative `basic_nest` costs are `25 crumbs` and `10 twigs`.
+- `ResourceLedger` currently supports guarded single-resource credit/debit only; it has no atomic bundle operation.
+- The building placement validator is already verified and remains unchanged by this slice.
+- Git entry state was clean; local `main`, local `chucky-dev`, `origin/main`, and `origin/chucky-dev` all pointed to `9e0728b` after fetch.
+- Godot `4.6.2.stable.official.71f334935` is available at `/home/ubuntu/.local/bin/godot4`.
 
-Builder validation:
-- Godot 4.6.2 headless import passed.
-- Headless startup passed with exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-- Baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, existing Phase 3 building-catalog smoke, and new placement-validator smoke passed with exactly one authoritative marker each.
-- Combined output scanning found no `SCRIPT ERROR`, `Parse Error`, or unexpected `ERROR:` lines.
-- `git diff --check` passed.
-- Focused reskin substitution proved presentation metadata does not affect placement mechanics; this is not a subjective GUI-quality claim.
+Required build outcome:
+- Validate every bundle entry and every required balance before any mutation.
+- Debit all valid costs exactly once on success; preserve the complete ledger snapshot on every rejection.
+- Reject empty/malformed bundles, unknown IDs, non-positive or non-`int` amounts, and insufficient balances with stable semantic statuses.
+- Preserve caller-owned data and all existing ledger APIs.
+- Keep the ledger independent from building presentation and from `BuildingCatalog`; pass only a semantic cost dictionary.
 
-Save/schema impact: None. The service is stateless and receives transient inputs.
+Required validations:
+- Godot headless import and startup with exactly one `PIGEON_EMPIRE_STARTUP_OK`.
+- Baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, both existing Phase 3 smokes, and new `phase03_construction_cost_transaction_smoke.gd` with exactly one `PHASE03_CONSTRUCTION_COST_TRANSACTION_SMOKE PASS`.
+- Combined-output scan rejects nonzero exits, `SCRIPT ERROR`, `Parse Error`, unexpected `ERROR:` lines, missing markers, and duplicate markers.
+- `git diff --check`.
+- Focused semantic checks for exact Basic Nest debit, all-or-nothing insufficient balance, malformed/unknown entries, repeated transactions, unrelated-resource isolation, caller-data immutability, and full Basic Nest presentation-metadata substitution.
 
-Known blocker status: None. QA independently reran the full required suite against builder commit `bbd114b7227af4944f02f86039bd412f1c2e2f09`; no integration fix was required.
+Save/schema impact: None. Runtime in-memory ledger API only; no persistence, migration, autoload, building record, or offline progress.
 
-QA result:
-- Headless import/startup, baseline, all Phase 1 and Phase 2 smokes, both Phase 3 smokes, exact marker checks, parser/error scanning, reskin substitution, and `git diff --check` passed.
-- The placement result remains copied/immutable to callers, inputs remain unchanged, and no gameplay-to-presentation coupling was found.
-- Promotion target: `main`; the exact promoted commit is recorded by the QA integration run after remote synchronization.
+Known blocker status: None. This plan intentionally stops before the later construction command because charging resources must eventually be coordinated with placement/occupancy rather than pretending a debit alone constructs a building.
 
-See `docs/ACTIVE_PHASE.md` for exact acceptance criteria, rollback boundary, and exclusions.
+See `docs/ACTIVE_PHASE.md` for exact scope, exclusions, acceptance criteria, validation commands, risks, rollback boundary, and reskin contract.
