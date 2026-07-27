@@ -127,3 +127,15 @@
 - Reskin check passed: the focused smoke substitutes all five presentation metadata fields while preserving semantic identity, order, footprint, costs, storage, lookup, and validation. No image or presentation resource was introduced or loaded by gameplay code.
 - Persistence/save tests: not applicable; this immutable definition-only slice contains no runtime building state, save, schema, migration, autoload, placement, debit, or storage-cap behavior.
 - Manual GUI status: not applicable to this data-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 3 — Building Placement Validator
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `bbd114b7227af4944f02f86039bd412f1c2e2f09`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, both Phase 3 smokes, zero parser/error-log matches, and `git diff --check`.
+- Placement checks passed: authoritative 2x2 row-major footprint, all four bounds, unrelated/duplicate/overlapping occupancy, malformed inputs, stable statuses, copied results, and unchanged dependencies.
+- Reskin check passed: the focused smoke substitutes all Basic Nest presentation metadata and proves identical status, anchor, and footprint cells. The validator loads no presentation resource and depends only on semantic footprint, integer cells, injected bounds, and occupancy.
+- Persistence/save tests: not applicable; the validator is stateless and the slice contains no save, schema, migration, autoload, runtime building, debit, or storage change.
+- Manual GUI status: not applicable to this logic-only slice; no GUI, browser/export, or visual-quality success is claimed.

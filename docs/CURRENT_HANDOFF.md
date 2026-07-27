@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Builder base commit: `63e3c69d7eafd8b4eaf78eff0afe62de419a0966`
@@ -25,6 +25,11 @@ Builder validation:
 
 Save/schema impact: None. The service is stateless and receives transient inputs.
 
-Known blocker status: None. QA should independently rerun the required suite against the builder commit, verify the coherent diff and immutable-result contract, then promote or return a narrow correction request.
+Known blocker status: None. QA independently reran the full required suite against builder commit `bbd114b7227af4944f02f86039bd412f1c2e2f09`; no integration fix was required.
+
+QA result:
+- Headless import/startup, baseline, all Phase 1 and Phase 2 smokes, both Phase 3 smokes, exact marker checks, parser/error scanning, reskin substitution, and `git diff --check` passed.
+- The placement result remains copied/immutable to callers, inputs remain unchanged, and no gameplay-to-presentation coupling was found.
+- Promotion target: `main`; the exact promoted commit is recorded by the QA integration run after remote synchronization.
 
 See `docs/ACTIVE_PHASE.md` for exact acceptance criteria, rollback boundary, and exclusions.
