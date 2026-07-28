@@ -139,3 +139,15 @@
 - Reskin check passed: the focused smoke substitutes all Basic Nest presentation metadata and proves identical status, anchor, and footprint cells. The validator loads no presentation resource and depends only on semantic footprint, integer cells, injected bounds, and occupancy.
 - Persistence/save tests: not applicable; the validator is stateless and the slice contains no save, schema, migration, autoload, runtime building, debit, or storage change.
 - Manual GUI status: not applicable to this logic-only slice; no GUI, browser/export, or visual-quality success is claimed.
+
+## Phase 3 — Atomic Construction Cost Transaction
+
+- Result: **VERIFIED**
+- Builder commit reviewed: `273a1b655810fa49f06a7cd72e6beb88676231d2`
+- QA integration fix: none required.
+- Godot: `4.6.2.stable.official.71f334935` at `/home/ubuntu/.local/bin/godot4`
+- Validation passed: headless import, startup (exactly one `PIGEON_EMPIRE_STARTUP_OK`), baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, all three Phase 3 smokes, zero parser/error-log matches, and `git diff --check`.
+- Transaction checks passed: exact authoritative Basic Nest debit, affordable repeats, all-or-nothing insufficient-balance rejection in both caller orders, deterministic malformed/unknown rejection, copied ledger views, caller-bundle immutability, and unrelated-resource isolation.
+- Reskin check passed: the focused smoke substitutes every Basic Nest presentation field and proves identical semantic status and exact balance delta. The ledger depends only on semantic resource IDs, positive integer costs, and balances; it loads no presentation resource or image.
+- Persistence/save tests: not applicable; the operation is in-memory only and the slice contains no save, schema, migration, autoload, or runtime building state.
+- Manual GUI status: not applicable to this logic-only slice; no GUI, browser/export, or visual-quality success is claimed.

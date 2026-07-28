@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Planning base commit: `9e0728b49ca50733882452412323a105d1cf4f90`
@@ -35,6 +35,8 @@ Save/schema impact: None. Runtime in-memory ledger API only; no persistence, mig
 
 Builder validation: PASS on Godot `4.6.2`; headless import/startup, baseline, all Phase 1 smokes, all Phase 2 smokes, both prior Phase 3 smokes, the construction-cost transaction smoke, exact marker counts, parser/error scanning, and `git diff --check` passed.
 
-Known blocker status: None. QA should independently verify this runtime-only slice. It intentionally stops before the later construction command because charging resources must eventually be coordinated with placement/occupancy rather than pretending a debit alone constructs a building.
+Known blocker status: None. This verified runtime-only slice intentionally stops before the later construction command because charging resources must eventually be coordinated with placement/occupancy rather than pretending a debit alone constructs a building.
+
+QA result: VERIFIED at builder commit `273a1b655810fa49f06a7cd72e6beb88676231d2`; no integration fix was required. QA independently passed headless import/startup, baseline, all Phase 1 and Phase 2 smokes, all three Phase 3 smokes, exact marker and parser/error scans, presentation substitution, and `git diff --check`. The promoted `main` commit is the QA documentation commit containing this handoff.
 
 See `docs/ACTIVE_PHASE.md` for exact scope, exclusions, acceptance criteria, validation commands, risks, rollback boundary, and reskin contract.
