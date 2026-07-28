@@ -1,37 +1,31 @@
 # Current Handoff
 
-State: READY_FOR_BUILD
+State: READY_FOR_QA
 
 Branch: `chucky-dev`
-Planning base commit: `b7f4ea74c3d498cc0c41ac3b6857d7d212a5a4d8`
+Builder base commit: `bfe65e01ca5abb0d38e431a8494a4ffae8107041`
+Validated main base: `b7f4ea74c3d498cc0c41ac3b6857d7d212a5a4d8`
 Current roadmap phase: Phase 3 — Building System
-Objective: Add one presentation-neutral runtime construction executor that resolves the authoritative Basic Nest, validates supplied placement/occupancy, and charges its complete resource bundle only on success, returning copied semantic result data without creating scenes or owning occupancy.
+Objective completed: Added one presentation-neutral runtime construction executor that resolves authoritative building mechanics, validates supplied placement/occupancy before payment, and atomically charges the complete construction cost only on success.
 
-Repository evidence:
-- `BuildingCatalog` and `BuildingDefinition` provide authoritative semantic lookup, 2x2 Basic Nest footprint, copied costs (`25 crumbs`, `10 twigs`), and presentation metadata isolated from mechanics.
-- `BuildingPlacementValidator` is stateless and returns stable semantic placement status plus copied candidate cells from supplied bounds and occupancy.
-- `ResourceLedger.debit_bundle()` validates complete bundles before mutation and returns stable semantic transaction statuses.
-- No construction executor, runtime building registry, occupancy authority, building scene, or storage application exists.
-- QA has independently verified the catalog, placement validator, and atomic cost transaction at the promoted base commit.
-- Entry tree was clean. After fetch, local/remote `main` and `chucky-dev` all pointed to `b7f4ea7`.
-- Godot `4.6.2.stable.official.71f334935` is available at `/home/ubuntu/.local/bin/godot4`.
+Implemented evidence:
+- `scripts/buildings/building_construction_executor.gd` injects `BuildingCatalog`, `BuildingPlacementValidator`, and `ResourceLedger`; it owns no occupancy, scenes, storage, or presentation.
+- `scripts/buildings/building_construction_result.gd` provides immutable semantic status, building ID, anchor, and copied footprint-cell queries.
+- Success resolves `basic_nest` from the catalog, returns its exact 2x2 row-major footprint, and debits exactly `25 crumbs` plus `10 twigs` while leaving unrelated balances unchanged.
+- Invalid placement, invalid/unknown IDs, missing dependencies, insufficient resources, and rejected transactions return deterministic semantic statuses without mutating caller occupancy or ledger state.
+- Repeated valid requests charge only while affordable; caller-owned occupancy remains deliberately deferred.
+- `tests/phase03_building_construction_executor_smoke.gd` covers exact success, placement-before-payment, insufficient-balance atomicity, missing/invalid inputs, repeated affordability, collection isolation, and complete Basic Nest presentation-metadata substitution.
+- No scene, UI, data JSON, image, theme, startup state, persistence/schema, storage, or occupancy authority changed.
 
-Required build outcome:
-- Resolve building mechanics from the injected catalog by semantic ID.
-- Validate placement before charging; preserve all balances on every rejected request.
-- Debit the exact authoritative cost once on success and return semantic ID, anchor, status, and copied footprint cells.
-- Keep occupancy caller-owned and unchanged; do not create a building instance or apply storage.
-- Keep all presentation assets and metadata outside construction logic and prove equivalent behavior under complete Basic Nest presentation substitution.
+Builder validation passed:
+- Godot headless import and startup; startup printed exactly one `PIGEON_EMPIRE_STARTUP_OK`.
+- Baseline smoke, all four Phase 1 smokes, all six Phase 2 smokes, all three prior Phase 3 smokes, and the new construction-executor smoke.
+- New smoke printed exactly one `PHASE03_BUILDING_CONSTRUCTION_EXECUTOR_SMOKE PASS`.
+- Combined-output parser/error scan and marker-count checks passed for every Godot command.
+- `git diff --check` passed.
 
-Required validations:
-- Godot headless import/startup with exactly one `PIGEON_EMPIRE_STARTUP_OK`.
-- Baseline, all Phase 1 smokes, all six Phase 2 smokes, all three existing Phase 3 smokes, and new `phase03_building_construction_executor_smoke.gd` with exactly one `PHASE03_BUILDING_CONSTRUCTION_EXECUTOR_SMOKE PASS`.
-- Combined-output scan rejects nonzero exits, `SCRIPT ERROR`, `Parse Error`, unexpected `ERROR:` lines, missing markers, and duplicate markers.
-- `git diff --check`.
-- Focused checks for exact valid debit/cells, invalid placement before debit, insufficient-balance atomicity, missing/unknown dependency rejection, caller/result collection isolation, repeated affordability, and full presentation substitution.
+Save/schema impact: None. This is in-memory orchestration only.
 
-Save/schema impact: None. Runtime in-memory orchestration only; no persistence, migration, autoload, building record, occupancy registry, storage state, or offline progress.
+Known blocker status: None. GUI and export behavior were not involved or claimed.
 
-Known blocker status: None. Cross-system occupancy mutation is intentionally deferred; this slice returns validated cells but does not pretend payment plus caller-owned world mutation is one atomic transaction.
-
-See `docs/ACTIVE_PHASE.md` for exact scope, exclusions, acceptance criteria, validation commands, risks, rollback boundary, and reskin contract.
+Next: QA should independently rerun the commands and acceptance checks in `docs/ACTIVE_PHASE.md`, then promote or return a narrowly evidenced defect.
