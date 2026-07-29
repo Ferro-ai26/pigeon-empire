@@ -1,6 +1,6 @@
 # Current Handoff
 
-State: READY_FOR_QA
+State: VERIFIED
 
 Branch: `chucky-dev`
 Builder base commit: `bfe65e01ca5abb0d38e431a8494a4ffae8107041`
@@ -26,6 +26,8 @@ Builder validation passed:
 
 Save/schema impact: None. This is in-memory orchestration only.
 
+QA evidence: independently verified builder commit `f14e809d9a1f9fb1dd15ca5792cc69d4f5d644e7` with headless import/startup, baseline, all Phase 1 and Phase 2 smokes, all four Phase 3 smokes, exact marker counts, zero parser/error-log matches, presentation substitution, and `git diff --check`. No integration fix was required.
+
 Known blocker status: None. GUI and export behavior were not involved or claimed.
 
-Next: QA should independently rerun the commands and acceptance checks in `docs/ACTIVE_PHASE.md`, then promote or return a narrowly evidenced defect.
+Next: Planning may define the next approved Phase 3 slice. No later roadmap item was started by QA.
