@@ -44,4 +44,6 @@ No known definition-resolution, placement-before-payment, exact-debit, insuffici
 
 QA verified the Phase 3 construction-executor slice at builder commit `f14e809` with no integration fix required. No save/schema validation was required because the slice is in-memory and introduces no persistence.
 
+No known runtime-ID, deterministic-order, occupied-cell lookup, overlap/malformed rejection, copied-collection, rejected-ID consumption, or presentation-metadata-coupling issue in the built Phase 3 building-registry slice. Payment-plus-registration atomicity, scenes, storage, persistence, GUI, and export behavior remain outside this slice and are not claimed.
+
 Manual GUI world-object pointer feel, selection-marker readability, pointer-drag and wheel feel, camera framing, placeholder overlap/readability, and equal-depth sibling-order appearance remain unverified in the headless QA environment. Browser/export validation has not been claimed.
